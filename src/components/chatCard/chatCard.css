@@ -1,0 +1,80 @@
+.chatCard {
+    width: 100%;
+    display: flex;
+    border: none;
+    border-top: 1px solid rgba(234, 234, 234, 1);
+    border-bottom: 1px solid rgba(234, 234, 234, 1);
+    justify-content: space-between;
+}
+
+.chatCard.chatCard_selected {
+    background-color: rgba(228, 237, 253, 1);
+}
+
+.chatCard__image-container {
+    display: flex;
+    align-items: center;
+    padding-left: 7px;
+}
+
+.chatCard__chat-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    margin: 0 auto 0 10px;
+}
+
+.chatCard__msg-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding-right: 7px;
+}
+
+.chatCard__image {
+    width: 47px;
+    height: 47px;
+    object-fit: cover;
+    border-radius: 50%;
+    background-color: rgba(239, 239, 239, 1);
+}
+
+.chatCard__chat-name {
+    font-family: Inter;
+    font-weight: 600;
+    font-size: 13px;
+    line-height: 13px;
+    margin: 10px 0 5px 0;
+}
+
+.chatCard__last-chat {
+    font-family: Inter;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 15px;
+    margin: 0;
+}
+
+.chatCard__last-chat.chatCard__last-chat_bold {
+    font-weight: bold;
+}
+
+.chatCard__time {
+    font-family: Inter;
+    font-weight: 500;
+    font-size: 9px;
+    line-height: 13px;
+    text-align: right;
+    color: rgba(153, 153, 153, 1);
+}
+
+.chatCard__count {
+    font-family: Inter;
+    font-weight: 500;
+    font-size: 11px;
+    padding: 5px;
+    text-align: center;
+    border-radius: 50%;
+    color: white;
+    background-color: rgba(51, 105, 243, 1);
+}

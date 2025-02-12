@@ -1,0 +1,26 @@
+.dataInput {
+    width: 510px;
+    display: flex;
+    justify-content: space-between;
+    margin: 5px 5px;
+    border-bottom: 1px solid rgba(234, 234, 234, 1);
+}
+
+.dataInput__label {
+    margin: 5px 0 5px 0;
+    font-family: Inter;
+    font-weight: 500;
+    font-size: 13px;
+    line-height: 13px;    
+}
+
+.dataInput__input {
+    width: 50%;
+    border: none;
+    padding: 5px;
+    text-align: right;
+    font-family: Inter;
+    font-weight: 500;
+    font-size: 13px;
+    line-height: 13px;
+}

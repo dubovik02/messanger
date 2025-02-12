@@ -1,0 +1,57 @@
+<div class="chat__root-container">
+    <div class="chat__list-container">
+        {{> Link elem-mod="link_grey" linkText="Профиль >"}}
+        {{> SearchInput placeholder="Поиск"}}
+        {{> ChatCard
+            selected="chatCard_selected" 
+            imgSrc="url('../../../../assets/hafizov.jpg"
+            chatName="Antonio" 
+            owner="Вы:" 
+            lastChat="Изображение"
+            time="00:00"
+            count="20"
+        }}
+        {{> ChatCard
+            imgSrc="url('../../../../assets/hafizov.jpg" 
+            chatName="Frolo" 
+            lastChat="Привет Чат!"
+            time="01:30"
+            count="2"
+        }}
+    </div>
+    <div class="chat__props-container">
+        <div class="chat__detail-container">
+            <div class="chat__user-container">
+                <img class="chat__user-image" src="url('../../../../assets/hafizov.jpg" alt="User's image">
+                <h3 class="chat__user-name">Antonio</h3>
+            </div>
+            {{>PictureButton imgSrc="url('../../../../assets/dots.png"}}
+        </div>
+        <div class="chat__talk-container">
+            <div class="chat__talk">
+                <p class="chat__date">1 февраля</p>
+                {{> ChatSet
+                    msgClass="chatSet__message-container_from-me"
+                    message="Трамп рассказал о желании заключить сделку с украинским президентом Владимиром 
+                            Зеленским на $500 млн относительно доступа к редкоземельным минералам и газу на 
+                            Украине в обмен на гарантии безопасности в любом потенциальном мирном урегулировани."
+                    messageStatus=""
+                    messageTime="19:34"
+                }}
+                {{> ChatSet
+                    msgClass="chatSet__message-container_for-me"
+                    message="Иногда слова не нужны. Используйте стикеры и GIF-анимацию, делитесь 
+                            повседневными впечатлениями с помощью функции \"Статус\". 
+                            Записывайте голосовые сообщения, чтобы поделиться новостями или просто сказать \"Привет!\"."
+                    messageStatus="v"
+                    messageTime="8:55"
+                }}
+            </div>
+        </div>
+        <div class="chat__msg-container">
+            {{> PictureButton imgSrc="url('../../../../assets/dots.png"}}
+            {{> MsgInput name="message"}}
+            {{> ArrowButton}}
+        </div>
+    </div>
+</div>
