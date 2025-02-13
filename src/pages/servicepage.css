@@ -4,7 +4,8 @@
     align-items: center;
     justify-content: center;
     margin: auto auto;
-    /* padding: 50% 0 50% 0; */
+    margin-inline: auto;
+    margin-block-start: 30vh;
 }
 
 .service-page__button-container {
