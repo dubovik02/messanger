@@ -3,24 +3,24 @@
         {{> TextLabel labelText="Регистрация" classStyle="textLabel textLabel_subtitle"}}
         <form class="dialog__form">
             <div class="dialog__form-container">
-                {{> TextLabel labelText="Почта" classStyle="textLabel textLabel_text textLabel_text-grey"}}
-                {{> InputText inputType="email"  name="email"}}
+                {{> TextLabel labelText="Почта" classStyle="textLabel textLabel_text textLabel_text-grey" inputId="email"}}
+                {{> InputText inputType="email"  name="email" id="email"}}
 
-                {{> TextLabel labelText="Логин" classStyle="textLabel textLabel_text textLabel_text-grey"}}
-                {{> InputText inputType="text"  name="login"}}
+                {{> TextLabel labelText="Логин" classStyle="textLabel textLabel_text textLabel_text-grey" inputId="login"}}
+                {{> InputText inputType="text"  name="login" id="login"}}
                 {{> TextLabel labelText="Логин содержит спецсимволы" classStyle="textLabel textLabel_text textLabel_text-red"}}
 
-                {{> TextLabel labelText="Имя" classStyle="textLabel textLabel_text textLabel_text-grey"}}
-                {{> InputText inputType="text"  name="first_name"}}
+                {{> TextLabel labelText="Имя" classStyle="textLabel textLabel_text textLabel_text-grey" inputId="first_name"}}
+                {{> InputText inputType="text"  name="first_name" id="first_name"}}
 
-                {{> TextLabel labelText="Фамилия" classStyle="textLabel textLabel_text textLabel_text-grey"}}
-                {{> InputText inputType="text"  name="last_name"}}
+                {{> TextLabel labelText="Фамилия" classStyle="textLabel textLabel_text textLabel_text-grey" inputId="last_name"}}
+                {{> InputText inputType="text"  name="last_name" id="last_name"}}
 
-                {{> TextLabel labelText="Телефон" classStyle="textLabel textLabel_text textLabel_text-grey"}}
-                {{> InputText inputType="tel"  name="phone"}}
+                {{> TextLabel labelText="Телефон" classStyle="textLabel textLabel_text textLabel_text-grey" inputId="phone"}}
+                {{> InputText inputType="tel"  name="phone" id="phone"}}
 
-                {{> TextLabel labelText="Пароль" classStyle="textLabel textLabel_text textLabel_text-grey"}}
-                {{> InputText inputType="password" name="password"}}
+                {{> TextLabel labelText="Пароль" classStyle="textLabel textLabel_text textLabel_text-grey" inputId="password"}}
+                {{> InputText inputType="password" name="password" id="password"}}
 
                 {{> TextLabel labelText="Пароль еще раз" classStyle="textLabel textLabel_text textLabel_text-grey"}}
                 {{> InputText inputType="password"}}

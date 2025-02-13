@@ -2,7 +2,9 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 25% 0 25% 0;
+    justify-content: center;
+    margin: auto auto;
+    /* padding: 50% 0 50% 0; */
 }
 
 .service-page__button-container {

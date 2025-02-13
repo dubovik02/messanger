@@ -3,12 +3,12 @@
         {{> TextLabel labelText="Вход" classStyle="textLabel textLabel_subtitle"}}
         <form class="dialog__form">
             <div class="dialog__form-container">
-                {{> TextLabel labelText="Логин" classStyle="textLabel textLabel_text textLabel_text-grey"}}
-                {{> InputText inputType="text" name="login"}}
+                {{> TextLabel labelText="Логин" classStyle="textLabel textLabel_text textLabel_text-grey" inputId="login"}}
+                {{> InputText inputType="text" name="login" id="login"}}
                 {{> TextLabel labelText="Логин содержит спецсимволы" classStyle="textLabel textLabel_text textLabel_text-red"}}
 
-                {{> TextLabel labelText="Пароль" classStyle="textLabel textLabel_text textLabel_text-grey"}}
-                {{> InputText inputType="password" name="password"}}
+                {{> TextLabel labelText="Пароль" classStyle="textLabel textLabel_text textLabel_text-grey" inputId="password"}}
+                {{> InputText inputType="password" name="password" id="password"}}
                 {{> TextLabel labelText="Это обязательное поле" classStyle="textLabel textLabel_text textLabel_text-red"}}
             </div>
             <div class="dialog__form-container">

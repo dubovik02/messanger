@@ -1,10 +1,10 @@
 <div class="user">
     <div class="user__back-container">
-        {{> ArrowButton}}
+        {{> ArrowButton imgSrc=picSrc.left}}
     </div>
     <div class="user__container">
         <div class="user__avatar-container">
-            {{> PictureButton picStyleClass="pictureButton__image_round pictureButton__image_size130" name="avatar"}}
+            {{> PictureButton picSrc=imgSrc picStyleClass="pictureButton__image_round pictureButton__image_size130" name="avatar"}}
             {{> TextLabel classStyle="textLabel textLabel_subtitle" labelText="Евгений"}}
         </div>
         {{> DataInput type="email" name="email" labelText="Почта" placeholder="Введите e-mail" value="123@yandex.ru"}}

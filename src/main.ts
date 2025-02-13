@@ -1,5 +1,12 @@
 import './style.css';
 
+import avatar from './assets/hafizov.jpg';
+import dots from './assets/dots.png';
+import arrRight from './assets/arrowR.png';
+import arrLeft from './assets/arrowL.png';
+import clip from './assets/clip.png';
+
+
 import IPage from './Interfaces/IPage';
 
 import Handlebars from 'handlebars';
@@ -32,10 +39,10 @@ function onLoadDOM() {
   createNavigationPanel();
 }
 
-function makePage(pageName : string) {
+function makePage(pageName : string, params : object) {
   clearContentContainer();
   const temlpate = Handlebars.compile(pageName);
-  const pageHTML = temlpate({});
+  const pageHTML = temlpate(params);
   if (container) {
     container.insertAdjacentHTML('beforeend', pageHTML);
   }
@@ -60,7 +67,9 @@ function createNavigationPanel() {
         butEl[0].addEventListener('click', (e) => {
           if (item.mnemoCode) {
             //@ts-ignore
-            makePage(Pages[item.mnemoCode]);
+            makePage(Pages[item.mnemoCode], 
+              { imgSrc: avatar, picSrc: {dots: dots, right: arrRight, left: arrLeft, clip: clip } 
+            });
           };
           e.preventDefault();
         });

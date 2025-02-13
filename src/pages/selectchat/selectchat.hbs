@@ -4,7 +4,7 @@
         {{> SearchInput placeholder="Поиск"}}
         {{> ChatCard
             selected="chatCard_selected" 
-            imgSrc=(url('../../../../assets/hafizov.jpg'))
+            imgSrc=imgSrc
             chatName="Antonio" 
             owner="Вы:" 
             lastChat="Изображение"
@@ -12,8 +12,8 @@
             count="20"
         }}
         {{> ChatCard
-            imgSrc="url('../../../../assets/hafizov.jpg" 
-            chatName="Frolo" 
+            chatName="Frolo"
+            imgSrc=imgSrc 
             lastChat="Привет Чат!"
             time="01:30"
             count="2"
@@ -22,10 +22,10 @@
     <div class="chat__props-container">
         <div class="chat__detail-container">
             <div class="chat__user-container">
-                <img class="chat__user-image" src="url('../../../../assets/hafizov.jpg" alt="User's image">
+                <img class="chat__user-image" src={{imgSrc}} alt="User's image">
                 <h3 class="chat__user-name">Antonio</h3>
             </div>
-            {{>PictureButton imgSrc="url('../../../../assets/dots.png"}}
+            {{>PictureButton picStyleClass="pictureButton__image_size15" picSrc=picSrc.dots}}
         </div>
         <div class="chat__talk-container">
             <div class="chat__talk">
@@ -49,9 +49,9 @@
             </div>
         </div>
         <div class="chat__msg-container">
-            {{> PictureButton imgSrc="url('../../../../assets/dots.png"}}
+            {{> PictureButton picSrc=picSrc.clip}}
             {{> MsgInput name="message"}}
-            {{> ArrowButton}}
+            {{> ArrowButton imgSrc=picSrc.right}}
         </div>
     </div>
 </div>
