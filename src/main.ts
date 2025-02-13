@@ -1,7 +1,5 @@
 import './style.css';
 
-import menuImg from './assets/hafizov.jpg';
-
 import IPage from './Interfaces/IPage';
 
 import Handlebars from 'handlebars';
