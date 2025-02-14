@@ -1,5 +1,7 @@
 import { defineConfig } from 'vite';
 
+process.env.VITE_PORT = 3000;
+
 export default defineConfig({
   root: '.',
   build: {
@@ -9,3 +11,4 @@ export default defineConfig({
     port: 3000,
   },
 })
+
