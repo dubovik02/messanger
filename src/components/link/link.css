@@ -1,0 +1,25 @@
+.link {
+	font-family: Inter;
+  font-style: normal;
+  font-weight: 500;
+	font-size: 11px;
+  text-decoration: none;
+  color: rgba(51, 105, 243, 1);
+  display: inline-block;
+	cursor: pointer;
+}
+
+.link.link_grey {
+  color: rgba(153, 153, 153, 1);
+}
+
+.link.link_red {
+  color: red;
+}
+
+.link.link_uderlined {
+  font-size: 13px;
+  text-align: left;
+  margin: 5px 0;
+  border-bottom: 1px solid rgba(234, 234, 234, 1);
+}

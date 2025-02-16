@@ -1,0 +1,26 @@
+.pictureButton {
+    cursor: pointer;
+    text-decoration: none;
+    display: flex;
+}
+
+.pictureButton__image {
+    width: 32px;
+    height: 32px;
+    object-fit: cover;
+    display: inline-block;
+}
+
+.pictureButton__image.pictureButton__image_round {
+    border-radius: 50%;
+}
+
+.pictureButton__image.pictureButton__image_size130 {
+    width: 130px;
+    height: 130px;
+}
+
+.pictureButton__image.pictureButton__image_size15 {
+    width: 15px;
+    height: 15px;
+}

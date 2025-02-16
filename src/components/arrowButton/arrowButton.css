@@ -1,0 +1,13 @@
+.arrowButton {
+    cursor: pointer;
+    text-decoration: none;
+    display: flex;
+}
+
+.arrowButton__image {
+    width: 28px;
+    height: 28px;
+    object-fit: cover;
+    border-radius: 50%;
+    display: inline-block;
+}

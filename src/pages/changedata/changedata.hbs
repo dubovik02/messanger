@@ -1,0 +1,19 @@
+<div class="user">
+    <div class="user__back-container">
+        {{> ArrowButton imgSrc=picSrc.left}}
+    </div>
+    <div class="user__container">
+        <div class="user__avatar-container">
+            {{> PictureButton picSrc=imgSrc picStyleClass="pictureButton__image_round pictureButton__image_size130" name="avatar"}}
+        </div>
+        {{> DataInput type="email" name="email" labelText="Почта" placeholder="Введите e-mail"}}
+        {{> DataInput type="text" name="login" labelText="Логин" placeholder="Введите логин"}}
+        {{> DataInput type="text" name="first_name" labelText="Имя" placeholder="Введите Вашее имя"}}
+        {{> DataInput type="text" name="second_name" labelText="Фамилия" placeholder="Введите Вашу фамилию"}}
+        {{> DataInput type="text" name="display_name" labelText="Имя в чате" placeholder="Введите имя чате"}}
+        {{> DataInput type="text" name="phone" labelText="Телефон" placeholder="Введите номер телефона"}}
+        <div class="user__button-container user__button-container_center">
+            {{> Button buttonText="Сохранить"}}
+        </div>     
+    </div>
+</div>

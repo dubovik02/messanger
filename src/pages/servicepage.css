@@ -1,0 +1,16 @@
+.service-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: auto auto;
+    margin-inline: auto;
+    margin-block-start: 30vh;
+}
+
+.service-page__button-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 50px 0 0 0;
+}

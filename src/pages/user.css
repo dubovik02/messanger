@@ -1,0 +1,38 @@
+.user {
+    display: flex;
+    justify-content: center;
+}
+
+.user__back-container {
+    width: 64px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: auto 18px;
+    background-color: rgba(251, 251, 251, 1);
+}
+
+.user__container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: auto auto;
+}
+
+.user__button-container {
+    display: flex;
+    flex-direction: column;
+    margin: 50px 0;
+}
+
+.user__button-container.user__button-container_center {
+    margin: 50px 25% auto 25%;
+}
+
+.user__avatar-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 50px;
+}
