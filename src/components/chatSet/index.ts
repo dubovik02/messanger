@@ -1,2 +1,2 @@
 import './chatSet.css';
-export { default as ChatSet } from './chatSet.hbs?raw';
+export { default as ChatSet } from './chatSet';
