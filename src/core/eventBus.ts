@@ -1,6 +1,6 @@
 export default class EventBus {
 
-  _listeners : Record<string, Function[]>;
+  private _listeners : Record<string, Function[]>;
 
   constructor() {
     this._listeners = {};

@@ -1,23 +1,18 @@
 import './style.css';
 
 import avatar from './assets/hafizov.jpg';
-// import dots from './assets/dots.png';
-// import arrRight from './assets/arrowR.png';
-// import arrLeft from './assets/arrowL.png';
-// import clip from './assets/clip.png';
-
-
 import IPage from './Interfaces/IPage';
-
 import Handlebars from 'handlebars';
 import * as Components  from './components';
 import * as Pages from './pages';
 import Block from './core/block';
 import { renderDOM } from './core/renderDOM';
 import { addToElement } from './core/renderDOM';
+import { User } from './types/user';
 
 const header = document.querySelector('.header');
 
+// тестовые данные - начало
 const chats : Block[] = [
   new Components.ChatCard(
     {
@@ -60,18 +55,28 @@ const chatsSet : Components.ChatSet[] = [
       messageTime: '15:57',
     }
   ),
+];
 
-]
+const user : User = {
+  email: 'adv@mail.ru',
+  login: 'Don',
+  first_name: 'Ivan',
+  second_name: 'Soloviev',
+  display_name: 'Ivanushka',
+  phone: '+78622153421',
+  avatarPath: avatar,
+}
+// тестовые данные - конец
 
 const pages :  Array<IPage> = [
   {description: 'Страница Login', mnemoCode: 'LoginPage', component: new Pages.LoginPage()},
   {description: 'Страница Signin', mnemoCode: 'SigninPage', component: new Pages.SigninPage()},
   {description: 'Выбор Чата', mnemoCode: 'SelectChatPage', component: new Pages.SelectChatPage(chats, chatsSet)},
-  // {description: 'Настройки пользователя', mnemoCode: 'UserPage'},
-  // {description: 'Изменение данных пользователя', mnemoCode: 'ChangeDataPage'},
-  // {description: 'Изменение пароля пользователя', mnemoCode: 'ChangePasswordPage'},
-  // {description: 'Страница 404', mnemoCode: 'NotFoundPage'},
-  // {description: 'Страница 500', mnemoCode: 'ServerErrorPage'},
+  {description: 'Настройки пользователя', mnemoCode: 'UserPage', component: new Pages.UserPage({})},
+  {description: 'Изменение данных пользователя', mnemoCode: 'ChangeDataPage', component: new Pages.ChangeDataPage(user)},
+  {description: 'Изменение пароля пользователя', mnemoCode: 'ChangePasswordPage', component: new Pages.ChangePasswordPage(user)},
+  {description: 'Страница 404', mnemoCode: 'NotFoundPage', component: new Pages.ServicePage('404', 'Не туда попали')},
+  {description: 'Страница 500', mnemoCode: 'NotFoundPage', component: new Pages.ServicePage('500', 'Мы уже фиксим')},
 ];
 
 Object.entries(Components).forEach(([ name, template ]) => {

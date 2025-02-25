@@ -9,7 +9,7 @@ import ArrowButton from "../../components/arrowButton/arrowButton";
 
 export default class SelectChatPage extends Block {
 
-  chatList : any;
+  protected chatList : unknown;
 
   constructor(chats : ChatCard[], chatsSet : ChatSet[]) {
     super(
@@ -54,10 +54,6 @@ export default class SelectChatPage extends Block {
     );
 
     this.chatList = document.querySelector('.chat__list-container');
-  }
-
-  addChatListItem(item : ChatCard) {
-    this.chatList?.insertAdjacentElement('beforeend', item.getContent());
   }
 
   override render(): string {

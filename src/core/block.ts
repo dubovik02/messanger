@@ -1,4 +1,3 @@
-import Handlebars from 'handlebars';
 import { BlockProps } from "../types/blockProps";
 import EventBus from "./eventBus";
 
@@ -11,18 +10,18 @@ export default class Block {
     FLOW_RENDER: "flow:render"
   };
 
-  _element : any;
+  private _element : any;
 
   _meta : {
     tagName : string,
     props: BlockProps,
   };
 
-  _eventBus : EventBus;
+  private _eventBus : EventBus;
 
   private _id;
 
-  _childrens : Record<string, Block | Block[]>;
+  private _childrens : Record<string, Block | Block[]>;
 
 
   constructor(tagName = "div", props : BlockProps = {}, childrens : Record<string, Block | Block[]> = {}) {
@@ -41,7 +40,7 @@ export default class Block {
     this._eventBus.emit(Block.EVENTS.INIT);
   }
 
-  _makePropsProxy(props : BlockProps) {
+  private _makePropsProxy(props : BlockProps) {
     const self = this;
     return new Proxy(props, {
       get(target, prop) {
@@ -64,7 +63,7 @@ export default class Block {
     this._eventBus.emit(Block.EVENTS.FLOW_RENDER);
   }
 
-  _render() {
+  private _render() {
     this._removeEvents();
 
     const block = this.compile();
@@ -82,7 +81,7 @@ export default class Block {
     return '';
   }
 
-  _createResources() {
+  private _createResources() {
     const { tagName } = this._meta;
     this._element = this._createDocumentElement(tagName);
 
@@ -104,7 +103,7 @@ export default class Block {
     };
   }
 
-  _registerEvents() {
+  private _registerEvents() {
     if (this._eventBus) {
       this._eventBus.on(Block.EVENTS.INIT, this.init.bind(this));
       this._eventBus.on(Block.EVENTS.FLOW_CDM, this._componentDidMount.bind(this));
@@ -114,7 +113,7 @@ export default class Block {
   }
 
 
-  _addEvents() {
+  private _addEvents() {
     const { events = []} = this.getProperties();
 
     events.forEach((event) => {
@@ -123,7 +122,7 @@ export default class Block {
 
   }
 
-  _removeEvents() {
+  private _removeEvents() {
     const { events = [] } = this.getProperties();
 
     events.forEach((event) => {
@@ -147,7 +146,7 @@ export default class Block {
         }
     });
 
-    const fragment = this._createDocumentElement("template");
+    const fragment = this._createDocumentElement("template") as HTMLTemplateElement;
     const template = Handlebars.compile(this.render());
     fragment.innerHTML = template(propsAndStubs);
 
@@ -174,7 +173,7 @@ export default class Block {
     return this._element;
   }
 
-  _componentDidMount() {
+  private _componentDidMount() {
     this.componentDidMount();
   }
 
@@ -186,7 +185,7 @@ export default class Block {
     this._eventBus.emit(Block.EVENTS.FLOW_CDM);
   }
 
-  _componentDidUpdate(oldProps : BlockProps, newProps: BlockProps) {
+  private _componentDidUpdate(oldProps : BlockProps, newProps: BlockProps) {
     const response = this.componentDidUpdate(oldProps, newProps);
     if (!response) {
       return;
@@ -198,17 +197,8 @@ export default class Block {
     return true;
   }
 
-  _createDocumentElement(tagName : string) {
+  private _createDocumentElement(tagName : string) {
     return document.createElement(tagName);
-  }
-
-  _createSetOfDocumentElements(setSize : number, tagName : string) {
-    const result = [];
-
-    for (let i = 0; i < setSize; i ++) {
-      result.push(this._createDocumentElement(tagName));
-    }
-    return result;
   }
 
   show() {
