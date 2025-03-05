@@ -5,7 +5,7 @@ export default class HTTPTransport {
   constructor() {
   }
 
-  get = (url : string, options : { [key: string]: any } = {}) => {
+  get = (url : string, options : { [key: string]: never } = {}) => {
     return this.request(url, {...options, method: METHODS.GET}, options.timeout);
   };
 

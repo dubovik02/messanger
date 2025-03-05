@@ -11,6 +11,8 @@ export default class Block {
     FLOW_RENDER: "flow:render"
   };
 
+  //иной тип аргумента требует инициации в контрукторе,
+  // но инициализировать можем только в методе createResource
   private _element : any;
 
   _meta : {
@@ -45,7 +47,7 @@ export default class Block {
     const self = this;
     return new Proxy(props, {
       get(target, prop) {
-        const value = target[prop as keyof BlockProps] as any;
+        const value = target[prop as keyof BlockProps] as unknown;
         return typeof value === "function" ? value.bind(target) : value;
       },
       set(target, prop, value) {
@@ -67,7 +69,7 @@ export default class Block {
   private _render() {
     this._removeEvents();
 
-    this._element.textContent = '';//
+    this._element.textContent = '';
 
     const block = this.compile();
 
@@ -139,7 +141,7 @@ export default class Block {
 
   compile() {
 
-    const propsAndStubs : {[index: string]:any} = { ...this.getProperties() };
+    const propsAndStubs : {[index: string]: unknown} = { ...this.getProperties() };
 
     Object.keys(this.getChildrens()).forEach((key) => {
         if (Array.isArray(this.getChildrens()[key])) {
@@ -233,6 +235,7 @@ export default class Block {
     return this._childrens;
   }
 
+  //тип аргумента может быть любой
   setProps = (nextProps : any) => {
     if (!nextProps) {
       return;
