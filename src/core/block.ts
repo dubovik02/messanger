@@ -201,6 +201,7 @@ export default class Block {
   }
 
   componentDidUpdate(oldProps : BlockProps, newProps : BlockProps) {
+    if (oldProps == newProps) {return false};
     return true;
   }
 
