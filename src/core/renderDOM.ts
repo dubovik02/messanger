@@ -12,7 +12,6 @@ export function render(rootSelectorName : string, block : Block) {
     root.appendChild(block.getContent());
     block.dispatchComponentDidMount();
   }
-
   return root;
 }
 
@@ -22,6 +21,5 @@ export function addToElement(rootSelectorName : string, position : InsertPositio
     root.insertAdjacentElement(position, block.getContent());
     block.dispatchComponentDidMount();
   }
-
   return root;
 }

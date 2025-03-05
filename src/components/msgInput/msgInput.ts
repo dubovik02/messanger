@@ -1,28 +1,12 @@
 import Block from "../../core/block";
+import { BlockProps } from "../../types/blockProps";
 
 export default class MsgImport extends Block {
 
-  constructor() {
+  constructor(props : BlockProps) {
     super(
       'input',
-      {
-        className: 'msgInput',
-        attributes: [
-          {
-            name: 'type',
-            value: 'text',
-          },
-          {
-            name: 'name',
-            value: 'message',
-          },
-          {
-            name: 'placeholder',
-            value: 'Сообщение',
-          },
-        ]
-      }
-
+      props
     );
   }
 

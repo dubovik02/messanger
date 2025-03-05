@@ -3,7 +3,6 @@ import { InputText } from "../inputText";
 export default class SearchInput extends InputText {
 
   constructor() {
-
     super(
       {
         className: 'searchInput',
@@ -18,7 +17,7 @@ export default class SearchInput extends InputText {
           },
           {
             name: 'placeholder',
-            value: '&#128269;Поиск',
+            value: 'Поиск',
           }
         ]
       }

@@ -72,7 +72,7 @@ const pages :  Array<IPage> = [
   {description: 'Страница Login', mnemoCode: 'LoginPage', component: new Pages.LoginPage()},
   {description: 'Страница Signin', mnemoCode: 'SigninPage', component: new Pages.SigninPage()},
   {description: 'Выбор Чата', mnemoCode: 'SelectChatPage', component: new Pages.SelectChatPage(chats, chatsSet)},
-  {description: 'Настройки пользователя', mnemoCode: 'UserPage', component: new Pages.UserPage({})},
+  {description: 'Настройки пользователя', mnemoCode: 'UserPage', component: new Pages.UserPage(user)},
   {description: 'Изменение данных пользователя', mnemoCode: 'ChangeDataPage', component: new Pages.ChangeDataPage(user)},
   {description: 'Изменение пароля пользователя', mnemoCode: 'ChangePasswordPage', component: new Pages.ChangePasswordPage(user)},
   {description: 'Страница 404', mnemoCode: 'NotFoundPage', component: new Pages.ServicePage('404', 'Не туда попали')},

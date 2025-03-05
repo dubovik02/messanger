@@ -1,5 +1,5 @@
 import Block from "../../core/block";
-import { ChatSetProps } from "../../types/chatsetProps";
+import { ChatSetProps } from "../../types/chatSetProps";
 
 export default class ChatSet extends Block {
 

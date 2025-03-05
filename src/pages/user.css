@@ -8,15 +8,15 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: auto 18px;
-    background-color: rgba(251, 251, 251, 1);
+    padding: 18px;
+    background-color: rgb(251 251 251 / 100%);
 }
 
 .user__container {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    margin: auto auto;
+    margin: auto;
 }
 
 .user__button-container {
@@ -26,7 +26,7 @@
 }
 
 .user__button-container.user__button-container_center {
-    margin: 50px 25% auto 25%;
+    margin: 50px 25% auto;
 }
 
 .user__avatar-container {

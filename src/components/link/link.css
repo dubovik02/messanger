@@ -1,16 +1,15 @@
 .link {
-	font-family: Inter;
   font-style: normal;
   font-weight: 500;
 	font-size: 11px;
   text-decoration: none;
-  color: rgba(51, 105, 243, 1);
+  color: rgb(51 105 243 / 100%);
   display: inline-block;
 	cursor: pointer;
 }
 
 .link.link_grey {
-  color: rgba(153, 153, 153, 1);
+  color: rgb(153 153 153 / 100%);
 }
 
 .link.link_red {
@@ -21,5 +20,5 @@
   font-size: 13px;
   text-align: left;
   margin: 5px 0;
-  border-bottom: 1px solid rgba(234, 234, 234, 1);
+  border-bottom: 1px solid rgb(234 234 234 / 100%);
 }

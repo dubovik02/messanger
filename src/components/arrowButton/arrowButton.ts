@@ -6,7 +6,7 @@ export default class ArrowButton extends Block {
   constructor(props : ArrowButtonProps) {
 
     super(
-      'a',
+      'button',
       props
     );
 

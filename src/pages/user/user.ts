@@ -4,6 +4,7 @@ import arrowLeft from "../../assets/arrowL.png";
 import emptyAvatar from "../../assets/emptyAvatar.png";
 import { DataInput, Link, PictureButton, TextLabel } from "../../components";
 import { User } from "../../types/user";
+import inputText from "../../components/inputText/inputText";
 
 export default class UserPage extends Block {
 
@@ -30,58 +31,118 @@ export default class UserPage extends Block {
 
         avatarLabel: new TextLabel({className: "textLabel textLabel_subtitle", labelText: user.first_name! }),
 
-        emailInp: new DataInput({
+        inputEmail: new DataInput({
           className: 'dataInput',
-          type: "email",
           forName: "email",
           labelText: "Почта",
-          placeholder: "Введите e-mail",
-          value: user.email ? user.email : ''
+          },
+          {
+            input: new inputText({
+              className: "dataInput__input",
+              attributes: [
+                { name: "name", value: "email" },
+                { name: "id", value: "email" },
+                { name: "placeholder", value: "Введите e-mail"},
+                { name: "value", value: user.email ? user.email : ''},
+                { name: "readonly", value: "readonly"}
+              ],
+            }
+          ),
         }),
 
-        loginInp: new DataInput({
+        inputLogin: new DataInput({
           className: 'dataInput',
-          type: "text",
           forName: "login",
           labelText: "Логин",
-          placeholder: "Введите логин",
-          value: user.login ? user.login : ''
+          },
+          {
+            input: new inputText({
+              className: "dataInput__input",
+              attributes: [
+                { name: "name", value: "login" },
+                { name: "id", value: "login" },
+                { name: "placeholder", value: "Введите логин"},
+                { name: "value", value: user.login ? user.login : ''},
+                { name: "readonly", value: "readonly"}
+              ],
+            }
+          ),
         }),
 
-        firstNameInp: new DataInput({
+        inputFirstName: new DataInput({
           className: 'dataInput',
-          type: "text",
           forName: "first_name",
           labelText: "Имя",
-          placeholder: "Введите Ваше имя",
-          value: user.first_name ? user.first_name : ''
+          },
+          {
+            input: new inputText({
+              className: "dataInput__input",
+              attributes: [
+                { name: "name", value: "first_name" },
+                { name: "id", value: "first_name" },
+                { name: "placeholder", value: "Введите имя"},
+                { name: "value", value: user.first_name ? user.first_name : ''},
+                { name: "readonly", value: "readonly"}
+              ],
+            }
+          ),
         }),
 
-        secondNameInp: new DataInput({
+        inputSecondName: new DataInput({
           className: 'dataInput',
-          type: "text",
           forName: "second_name",
           labelText: "Фамилия",
-          placeholder: "Введите Вашу фамилию",
-          value: user.second_name ? user.second_name : ''
+          },
+          {
+            input: new inputText({
+              className: "dataInput__input",
+              attributes: [
+                { name: "name", value: "second_name" },
+                { name: "id", value: "second_name" },
+                { name: "placeholder", value: "Введите фамилию"},
+                { name: "value", value: user.second_name ? user.second_name : ''},
+                { name: "readonly", value: "readonly"}
+              ],
+            }
+          ),
         }),
 
-        displayNameInp: new DataInput({
+        inputDisplayName: new DataInput({
           className: 'dataInput',
-          type: "text",
           forName: "display_name",
           labelText: "Имя в чате",
-          placeholder: "Введите имя в чате",
-          value: user.display_name ? user.display_name : ''
+          },
+          {
+            input: new inputText({
+              className: "dataInput__input",
+              attributes: [
+                { name: "name", value: "display_name" },
+                { name: "id", value: "display_name" },
+                { name: "placeholder", value: "Введите имя в чате"},
+                { name: "value", value: user.display_name ? user.display_name : ''},
+                { name: "readonly", value: "readonly"}
+              ],
+            }
+          ),
         }),
 
-        phoneInp: new DataInput({
+        inputPhone: new DataInput({
           className: 'dataInput',
-          type: "tel",
           forName: "phone",
           labelText: "Телефон",
-          placeholder: "Введите телефон",
-          value: user.phone ? user.phone : ''
+          },
+          {
+            input: new inputText({
+              className: "dataInput__input",
+              attributes: [
+                { name: "name", value: "phone" },
+                { name: "id", value: "phone" },
+                { name: "placeholder", value: "Введите телефон"},
+                { name: "value", value: user.phone ? user.phone : ''},
+                { name: "readonly", value: "readonly"}
+              ],
+            }
+          ),
         }),
 
         linkChangeData: new Link({
@@ -113,12 +174,13 @@ export default class UserPage extends Block {
             {{{ avatar }}}
             {{{ avatarLabel }}}
           </div>
-          {{{ emailInp }}}
-          {{{ loginInp }}}
-          {{{ firstNameInp }}}
-          {{{ secondNameInp }}}
-          {{{ displayNameInp }}}
-          {{{ phoneInp }}}
+          {{{ inputEmail }}}
+          {{{ inputLogin }}}
+          {{{ inputFirstName }}}
+          {{{ inputSecondName }}}
+          {{{ inputDisplayName }}}
+          {{{ inputPhone }}}
+
           <div class="user__button-container">
             {{{ linkChangeData }}}
             {{{ linkChangePass }}}

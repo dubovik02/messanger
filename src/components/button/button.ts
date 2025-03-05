@@ -9,5 +9,4 @@ export default class Button extends Block {
   override render(): string {
     return `{{buttonText}}`;
   }
-
 }

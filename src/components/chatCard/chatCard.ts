@@ -32,5 +32,4 @@ export default class ChatCard extends Block {
       </div>
     `;
   }
-
 }

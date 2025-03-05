@@ -1,3 +1,4 @@
+import Handlebars from 'handlebars';
 import { BlockProps } from "../types/blockProps";
 import EventBus from "./eventBus";
 
@@ -66,9 +67,11 @@ export default class Block {
   private _render() {
     this._removeEvents();
 
+    this._element.textContent = '';//
+
     const block = this.compile();
 
-    if (Object.keys(this.getChildrens()).length == 0) {
+    if (Object.keys(this.getChildrens()).length === 0) {
       this._element.appendChild(block);
     } else {
       this._element.replaceChildren(block);
@@ -96,11 +99,15 @@ export default class Block {
       const attr = this.getProperties().attributes;
       if (attr) {
         attr.forEach((item) => {
-        this._element.setAttribute( item.name, item.value);
+        this._element.setAttribute(item.name, item.value);
       });
       }
+    }
 
-    };
+    if (this.getProperties().isActive !== undefined) {
+      const isDisabled = this.getProperties().isActive;
+      isDisabled ? this._element.removeAttribute('disabled') : this._element.setAttribute('disabled', 'disabled');
+    }
   }
 
   private _registerEvents() {

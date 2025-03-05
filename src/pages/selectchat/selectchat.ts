@@ -1,11 +1,9 @@
 import Block from "../../core/block";
-import { ChatCard, Link, MsgInput, PictureButton, SearchInput } from "../../components";
+import { ChatCard, Link, PictureButton, SearchInput } from "../../components";
 import { ChatCardProps } from "../../types/chatCardProps";
-import clip from '../../assets/clip.png';
 import dots from '../../assets/dots.png';
-import arrowRight from '../../assets/arrowR.png';
 import ChatSet from "../../components/chatSet/chatSet";
-import ArrowButton from "../../components/arrowButton/arrowButton";
+import { MessageForm } from "../../components/form/message";
 
 export default class SelectChatPage extends Block {
 
@@ -37,18 +35,7 @@ export default class SelectChatPage extends Block {
           imagePath: dots,
         }),
 
-        clipButton: new PictureButton({
-          className: 'pictureButton',
-          pictureStyleClass: 'pictureButton__image',
-          imagePath: clip,
-        }),
-
-        messageInput: new MsgInput(),
-
-        buttonSend: new ArrowButton({
-            className: 'arrowButton',
-            imagePath: arrowRight,
-        })
+        form: new MessageForm(),
       }
 
     );
@@ -93,11 +80,7 @@ export default class SelectChatPage extends Block {
             {{{ this }}}
             {{/each}}
           </div>
-          <div class="chat__msg-container">
-            {{{ clipButton }}}
-            {{{ messageInput }}}
-            {{{ buttonSend }}}
-          </div>
+          {{{ form }}}
         </div>
     `;
   }

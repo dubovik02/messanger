@@ -3,26 +3,19 @@ import { DataInputProps } from "../../types/dataInputProps";
 
 export default class DataInput extends Block {
 
-  constructor(props : DataInputProps) {
+  constructor(props : DataInputProps, input : Record<string, Block | Block[]>) {
 
     super(
       'div',
-      props
+      props,
+      input
     );
   }
 
   override render(): string {
     return `
       <label class="dataInput__label" for="{{forName}}">{{labelText}}</label>
-      <input class="dataInput__input"
-        type={{type}}
-        name={{forName}}
-        id={{forName}}
-        minlength={{minTextSize}}
-        maxlength={{maxTextSize}}
-        placeholder="{{placeholder}}"
-        value={{value}}
-      >
+      {{{ input }}}
     `;
   }
 }

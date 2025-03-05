@@ -2,13 +2,13 @@
     width: 100%;
     display: flex;
     border: none;
-    border-top: 1px solid rgba(234, 234, 234, 1);
-    border-bottom: 1px solid rgba(234, 234, 234, 1);
+    border-top: 1px solid rgb(234 234 234 / 100%);
+    border-bottom: 1px solid rgb(234 234 234 / 100%);
     justify-content: space-between;
 }
 
 .chatCard.chatCard_selected {
-    background-color: rgba(228, 237, 253, 1);
+    background-color: rgb(228 237 253 / 100%);
 }
 
 .chatCard__image-container {
@@ -36,19 +36,17 @@
     height: 47px;
     object-fit: cover;
     border-radius: 50%;
-    background-color: rgba(239, 239, 239, 1);
+    background-color: rgb(239 239 239 / 100%);
 }
 
 .chatCard__chat-name {
-    font-family: Inter;
     font-weight: 600;
     font-size: 13px;
     line-height: 13px;
-    margin: 10px 0 5px 0;
+    margin: 10px 0 5px;
 }
 
 .chatCard__last-chat {
-    font-family: Inter;
     font-weight: 500;
     font-size: 12px;
     line-height: 15px;
@@ -60,21 +58,19 @@
 }
 
 .chatCard__time {
-    font-family: Inter;
     font-weight: 500;
     font-size: 9px;
     line-height: 13px;
     text-align: right;
-    color: rgba(153, 153, 153, 1);
+    color: rgb(153 153 153 / 100%);
 }
 
 .chatCard__count {
-    font-family: Inter;
     font-weight: 500;
     font-size: 11px;
     padding: 5px;
     text-align: center;
     border-radius: 50%;
     color: white;
-    background-color: rgba(51, 105, 243, 1);
+    background-color: rgb(51 105 243 / 100%);
 }
