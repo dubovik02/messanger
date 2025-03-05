@@ -1,2 +1,2 @@
 import './msgInput.css'
-export { default as MsgInput } from './msgInput.hbs?raw';
+export { default as MsgInput } from './msgInput';

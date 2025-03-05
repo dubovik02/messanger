@@ -8,5 +8,4 @@ export { SelectChatPage } from './selectchat';
 export { UserPage } from './user';
 export { ChangeDataPage } from './changedata';
 export { ChangePasswordPage } from './chagepassword';
-export { NotFoundPage } from './notfound';
-export { ServerErrorPage } from './servererror';
+export { ServicePage } from './servicepage';

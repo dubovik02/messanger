@@ -3,11 +3,10 @@
   box-sizing: border-box;
   border: none;
 	border-radius: 6px;
-	background-color: rgba(239, 239, 239, 1);
+	background-color: rgb(239 239 239 / 100%);
   font-size: 12px;
-	color: rgba(153, 153, 153, 1);
+	color: rgb(153 153 153 / 100%);
   line-height: 12px;
-  font-family: Inter;
   font-style: normal;
   font-weight: normal;
   padding: 10px 5px;

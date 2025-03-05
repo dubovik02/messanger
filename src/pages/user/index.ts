@@ -1,1 +1,1 @@
-export { default as UserPage } from './user.hbs?raw';
+export { default as UserPage } from './user';
