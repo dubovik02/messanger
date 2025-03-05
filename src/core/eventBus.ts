@@ -26,6 +26,7 @@ export default class EventBus {
     );
   }
 
+  //тип аргумента может быть любой
 	emit(event : string, ...args : any) {
 
     if (!this._listeners[event]) {
