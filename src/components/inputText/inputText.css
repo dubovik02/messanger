@@ -1,10 +1,9 @@
 .inputText {
   width: 100%;
   border: none;
-  border-bottom: 1px solid rgba(51, 105, 243, 1);
+  border-bottom: 1px solid rgb(51 105 243 / 100%);
   font-size: 13px;
   line-height: 13px;
-  font-family: Inter;
   font-style: normal;
   font-weight: normal;
   padding: 3px;

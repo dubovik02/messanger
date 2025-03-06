@@ -1,1 +1,1 @@
-export { default as ChangeDataPage } from './changedata.hbs?raw';
+export { default as ChangeDataPage } from './changedata';

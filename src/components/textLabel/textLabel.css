@@ -1,7 +1,6 @@
 .textLabel {
-  margin: 5px 0 5px 0;
+  margin: 5px 0;
   width: 100%;
-  font-family: Roboto;
   font-style: normal;
   color: black;
 }
@@ -20,14 +19,12 @@
 }
 
 .textLabel.textLabel_service-page-title {
-  font-family: Inter;
   font-weight: 500;
   font-size: 40px;
   text-align: center;
 }
 
 .textLabel.textLabel_service-page-subtitle {
-  font-family: Inter;
   font-weight: 500;
   font-size: 20px;
   text-align: center;
@@ -39,9 +36,13 @@
 }
 
 .textLabel.textLabel_text.textLabel_text-grey {
-  color: rgba(153, 153, 153, 1);
+  color: rgb(153 153 153 / 100%);
 }
 
 .textLabel.textLabel_text.textLabel_text-red {
   color: red;
+}
+
+.textLabel.textLabel_bordered {
+  margin: 5px;
 }

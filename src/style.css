@@ -1,14 +1,17 @@
 @import url('./vendor/fonts.css');
 @import url('./vendor/normalize.css');
 
+html {
+  font-family: Inter, sans-serif;
+}
+
 .header {
   display: grid;
   grid-template-columns: 200px 200px 200px 200px;
-  grid-column-gap: 10px;
-  grid-row-gap: 10px;
+  grid-gap: 10px;
   justify-content: space-between;
   align-items: center;
-  margin: 10px 10px 20px 10px;
+  margin: 10px 10px 20px;
 }
 
 .main-container {
