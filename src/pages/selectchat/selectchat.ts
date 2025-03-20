@@ -42,7 +42,6 @@ class SelectChatPage extends Page {
               eventFunc: (e : Event) => {
                 e.preventDefault();
                 window.router.go(Pathnames.USER);
-                window.store.set({isLoading: true});
               }
             }
           ],
