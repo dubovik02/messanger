@@ -33,14 +33,14 @@ export default class Router {
 
   start() {
     window.onpopstate = event => {
-      this._onRoute(event.currentTarget!.location.pathname).bind(this);
+      //this._onRoute(event.currentTarget!.location.pathname).bind(this);
     };
     this._onRoute(window.location.pathname);
   }
 
   private _onRoute(pathname : string) {
     const route = this.getRoute(pathname);
-    if (route == null) {
+    if (!route) {
       this._currentRoute = this._notFoundRoute;
       this._notFoundRoute.render(this._rootQuery);
     }

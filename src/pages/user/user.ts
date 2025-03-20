@@ -32,7 +32,7 @@ class UserPage extends Page {
               eventName: 'click',
               eventFunc: (e : Event) => {
                 e.preventDefault();
-                window.history.back();
+                window.router.back();
               }
             }
           ],
@@ -46,7 +46,7 @@ class UserPage extends Page {
               eventName: 'click',
               eventFunc: (e : Event) => {
                 e.preventDefault();
-                document.location.pathname = Pathnames.CHANGEDATA;
+                window.router.go(Pathnames.CHANGEDATA);
               }
             }
           ],
@@ -60,7 +60,7 @@ class UserPage extends Page {
               eventName: 'click',
               eventFunc: (e : Event) => {
                 e.preventDefault();
-                document.location.pathname = Pathnames.PASSWORD;
+                window.router.go(Pathnames.PASSWORD);
               }
             }
           ],

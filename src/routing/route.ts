@@ -16,7 +16,7 @@ export default class Route {
 
   leave() {
     if (this.props.page) {
-      this.props.page.hide();
+      //this.props.page.hide();
     }
   }
 
@@ -31,15 +31,14 @@ export default class Route {
   render(rootQuery : string) {
     if (!this.props.page) {
       this.props.page = new this.props.pageClass({}, {});
-      const root = document.querySelector(rootQuery);
-      if (root) {
-        while (root.firstChild) {
-          root.removeChild(root.firstChild);
-        }
-        root.insertAdjacentElement('beforeend', this.props.page.getContent());
-        return root;
-      }
     }
-    this.props.page.show();
+    const root = document.querySelector(rootQuery);
+    if (root) {
+      while (root.firstChild) {
+        root.removeChild(root.firstChild);
+      }
+      root.insertAdjacentElement('beforeend', this.props.page.getContent());
+      this.props.page.componentDidMount();
+    }
   }
 }
