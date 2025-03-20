@@ -4,6 +4,10 @@
     display: flex;
 }
 
+.pictureButton.pictureButton_cursor-default {
+  cursor: default;
+}
+
 .pictureButton__image {
     width: 32px;
     height: 32px;

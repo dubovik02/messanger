@@ -1,16 +1,15 @@
 import './style.css';
 
 import avatar from './assets/hafizov.jpg';
-import IPage from './Interfaces/IPage';
-import Handlebars from 'handlebars';
+import emptyAvatar from "./assets/emptyAvatar.png";
 import * as Components  from './components';
 import * as Pages from './pages';
 import Block from './core/block';
-import { renderDOM } from './core/renderDOM';
-import { addToElement } from './core/renderDOM';
 import { User } from './types/user';
-
-const header = document.querySelector('.header');
+import Router from './routing/router';
+import Pathnames from './constants/pathnames';
+import Store, { StoreEvents } from './core/store';
+import Handlebars from 'handlebars';
 
 // тестовые данные - начало
 const chats : Block[] = [
@@ -68,17 +67,6 @@ const user : User = {
 }
 // тестовые данные - конец
 
-const pages :  Array<IPage> = [
-  {description: 'Страница Login', mnemoCode: 'LoginPage', component: new Pages.LoginPage()},
-  {description: 'Страница Signin', mnemoCode: 'SigninPage', component: new Pages.SigninPage()},
-  {description: 'Выбор Чата', mnemoCode: 'SelectChatPage', component: new Pages.SelectChatPage(chats, chatsSet)},
-  {description: 'Настройки пользователя', mnemoCode: 'UserPage', component: new Pages.UserPage(user)},
-  {description: 'Изменение данных пользователя', mnemoCode: 'ChangeDataPage', component: new Pages.ChangeDataPage(user)},
-  {description: 'Изменение пароля пользователя', mnemoCode: 'ChangePasswordPage', component: new Pages.ChangePasswordPage(user)},
-  {description: 'Страница 404', mnemoCode: 'NotFoundPage', component: new Pages.ServicePage('404', 'Не туда попали')},
-  {description: 'Страница 500', mnemoCode: 'NotFoundPage', component: new Pages.ServicePage('500', 'Мы уже фиксим')},
-];
-
 Object.entries(Components).forEach(([ name, template ]) => {
   if (typeof template === "function") {
     return;
@@ -86,37 +74,81 @@ Object.entries(Components).forEach(([ name, template ]) => {
   Handlebars.registerPartial(name, template);
 });
 
-Object.entries(Pages).forEach(([ name, template ]) => {
-  if (typeof template === "function") {
-    return;
-  }
-  Handlebars.registerPartial(name, template);
+const loginRoute = {
+  pathname: Pathnames.LOGIN,
+  pageClass: Pages.LoginPage,
+  page: null,
+};
+
+const signUpRoute = {
+  pathname: Pathnames.SIGNUP,
+  pageClass: Pages.SigninPage,
+  page: null,
+}
+
+const userRoute = {
+  pathname: Pathnames.USER,
+  pageClass: Pages.UserPage,
+  page: null,
+}
+
+const changDataRoute = {
+  pathname: Pathnames.CHANGEDATA,
+  pageClass: Pages.ChangeDataPage,
+  page: null,
+}
+
+const chatRoute = {
+  pathname: Pathnames.CHAT,
+  pageClass: Pages.SelectChatPage,
+  page: null,
+}
+
+const passwordRoute = {
+  pathname: Pathnames.PASSWORD,
+  pageClass: Pages.ChangePasswordPage,
+  page: null,
+}
+
+const notFoundRoute = {
+  pathname: Pathnames.NOT_FOUND,
+  pageClass: Pages.NotFoundPage,
+  page: null,
+}
+
+const serverErrRoute = {
+  pathname: Pathnames.SERVER_ERR,
+  pageClass: Pages.ServerErrorPage,
+  page: null
+}
+
+const defaultState = {
+  currentUser: null,
+  isLoading: false,
+  signupError: null,
+  loginError: null,
+  userChats: chats,
+  chatsSet: [],
+  emptyAvatar: emptyAvatar
+}
+
+window.router = new Router('.main-container', notFoundRoute);
+window.store = new Store(defaultState);
+
+window.store.on(StoreEvents.Updated, (prevState : object, newState : object) => {
+  // console.log("prevState", prevState);
+  // console.log("newState", newState);
 });
 
-function onLoadDOM() {
-  createNavigationPanel();
-}
+window.router
+  .use(loginRoute)
+  .use(signUpRoute)
+  .use(userRoute)
+  .use(changDataRoute)
+  .use(chatRoute)
+  .use(passwordRoute)
+  .use(notFoundRoute)
+  .use(serverErrRoute)
+  .start();
 
-function makePageAsComponent(pageBlock : Block) {
-  renderDOM('.main-container', pageBlock);
-}
-
-function createNavigationPanel() {
-  if (header) {
-    pages.forEach((item) => {
-      const link = new Components.Link({
-        className: "link",
-        linkText: item.description,
-        events: [
-          {eventName: 'click', eventFunc: (e : Event) => {
-            makePageAsComponent(item.component as Block);
-            e.preventDefault();
-          }}
-        ]
-      });
-      addToElement('.header', 'beforeend', link);
-    })
-  }
-}
-
-document.addEventListener('DOMContentLoaded', onLoadDOM);
+//Anton, Qwerty12345

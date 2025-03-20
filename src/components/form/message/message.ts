@@ -5,8 +5,12 @@ import arrowRight from '../../../assets/arrowR.png';
 import { MsgInput } from "../../msgInput";
 import { PictureButton } from "../../pictureButton";
 import clip from '../../../assets/clip.png';
+import { connect } from "../../../utils/connect";
+import { Waiter } from "../../waiter";
+import UserService from "../../../services/user";
+import ChatService from "../../../services/chat";
 
-export default class MessageForm extends FormWrapper {
+class MessageForm extends FormWrapper {
 
   constructor() {
     super(
@@ -22,10 +26,7 @@ export default class MessageForm extends FormWrapper {
                 e.preventDefault();
                 const result = this.checkValidityBeforeSubmit();
                 if (result) {
-                  console.log((this.getProperties() as FormProps).formState!);
-                }
-                else {
-                  console.log('error');
+
                 }
               }
             }
@@ -73,8 +74,7 @@ export default class MessageForm extends FormWrapper {
           attributes: [
             {name: "type", value: "submit"}
           ],
-      })
-
+        }),
       }
     );
   }
@@ -91,3 +91,11 @@ export default class MessageForm extends FormWrapper {
     return this.checkMessage();
   }
 }
+
+const mapStateToProps = (state : Record<string, unknown> ) => {
+  return {
+    isLoading: state.isLoading,
+  };
+};
+
+export default connect(mapStateToProps)(MessageForm);

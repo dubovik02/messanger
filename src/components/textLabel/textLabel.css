@@ -46,3 +46,7 @@
 .textLabel.textLabel_bordered {
   margin: 5px;
 }
+
+.textLabel.textLabel_center {
+  text-align: center;
+}

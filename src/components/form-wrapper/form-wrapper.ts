@@ -71,6 +71,16 @@ export default class FormWrapper extends Block {
     );
   }
 
+  checkRepeatedPasswordInput(elem : HTMLInputElement | undefined = undefined) {
+    return this.checkInputValidity(
+      'passwordRepeat',
+      elem instanceof HTMLInputElement ? elem : this.getChildrens()['inputPassRepeat'] as Block,
+      (this.getChildrens()['inputPass'] as Block).element.value,
+      this.getChildrens()['errorLabelPassRepeat'] as Block,
+      ErrMessages.PASSWORD_NOT_SAME
+    );
+  }
+
   checkOldPasswordInput(elem : HTMLInputElement | undefined = undefined) {
     return this.checkInputValidity(
       'oldPassword',

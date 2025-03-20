@@ -6,4 +6,5 @@ export type User = {
   display_name?: string;
   phone?: string;
   avatarPath?: string;
+  password?: string;
 }

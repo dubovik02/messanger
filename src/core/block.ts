@@ -207,6 +207,10 @@ export default class Block {
     return true;
   }
 
+  componentWillUnmount() {
+
+  }
+
   private _createDocumentElement(tagName : string) {
     return document.createElement(tagName);
   }

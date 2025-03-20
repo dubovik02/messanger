@@ -2,7 +2,7 @@ export type BlockProps = {
   className?: string;
   attributes?: {
     name: string,
-    value: string | RegExp
+    value: string | RegExp | undefined
   }[];
   events?: {
     eventName: string;

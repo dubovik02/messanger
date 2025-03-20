@@ -9,3 +9,9 @@ export { ArrowButton } from './arrowButton';
 export { MsgInput } from './msgInput';
 export { PictureButton } from './pictureButton';
 export { DataInput } from './dataInput';
+export { Waiter } from "./waiter";
+export { Chats } from "./chats";
+
+export { TextLabelHBS } from './textLabel';
+export { DataInputHBS } from './dataInput';
+export { PictureButtonHBS } from './pictureButton';
