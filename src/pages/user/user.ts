@@ -10,16 +10,24 @@ import Page from "../page";
 import Pathnames from "../../constants/pathnames";
 import { connect } from "../../utils/connect";
 import AuthService from "../../services/auth";
+import apiPath from "../../constants/api";
+import { BlockProps } from "../../types/blockProps";
 
-//export default class UserPage extends Block {
+
+type UserPageProps = PageProps & {
+  currentUser : Record<string, string>;
+  emptyAvatar : string;
+}
+
 class UserPage extends Page {
 
-  constructor() {
+  constructor(props : UserPageProps) {
 
     super(
      // 'div',
       //main
       {
+        ...props,
         className: 'user',
       },
       //children
@@ -36,6 +44,12 @@ class UserPage extends Page {
               }
             }
           ],
+        }),
+
+        avatar: new PictureButton({
+          className: 'pictureButton',
+          pictureStyleClass: 'pictureButton__image pictureButton__image_round pictureButton__image_size130',
+          imagePath: props.currentUser.avatar ? (apiPath.RESOURCES + props.currentUser.avatar) : props.emptyAvatar,
         }),
 
         linkChangeData: new Link({
@@ -75,14 +89,7 @@ class UserPage extends Page {
               eventFunc: (e : Event) => {
                 e.preventDefault();
                 const auth = new AuthService();
-                auth.logout()
-                .then(() => {
-                  window.router.go(Pathnames.LOGIN);
-                  window.store.set({currentUser: null});
-                })
-                .catch((err) => {
-                  console.log(err);
-                })
+                auth.logout();
               }
             }
           ],
@@ -92,18 +99,20 @@ class UserPage extends Page {
   }
 
   override render(): string {
+
+    const avatarElem = this.getChildrens()['avatar'] as Block;
+    const path = (this.getProperties() as UserPageProps).currentUser.avatar;
+    const fullPath = path ? (apiPath.RESOURCES + path) : (this.getProperties() as UserPageProps).emptyAvatar;
+    avatarElem.setProps({imagePath: fullPath});
+
     return `
       <div class="user__back-container">
         {{{ backButton }}}
       </div>
       <div class="user__container">
           <div class="user__avatar-container">
-            {{> PictureButtonHBS
-              classModif="pictureButton_cursor-default"
-              picStyleClass="pictureButton__image pictureButton__image_round pictureButton__image_size130"
-              picSrc=currentUser.avatar
-            }}
-            {{> TextLabelHBS labelText=currentUser.display_name}}
+            {{{ avatar }}}
+            {{> TextLabelHBS classStyle="textLabel textLabel_subtitle" labelText=currentUser.display_name}}
           </div>
           {{> DataInputHBS className="dataInput" value=currentUser.email labelText="Почта" readonly="readonly" }}
           {{> DataInputHBS className="dataInput" value=currentUser.login labelText="Логин" readonly="readonly" }}
@@ -111,13 +120,6 @@ class UserPage extends Page {
           {{> DataInputHBS className="dataInput" value=currentUser.second_name labelText="Фамилия" readonly="readonly" }}
           {{> DataInputHBS className="dataInput" value=currentUser.display_name labelText="Имя в чате" readonly="readonly" }}
           {{> DataInputHBS className="dataInput" value=currentUser.phone labelText="Телефон" readonly="readonly" }}
-
-          {{{ inputEmail }}}
-          {{{ inputLogin }}}
-          {{{ inputFirstName }}}
-          {{{ inputSecondName }}}
-          {{{ inputDisplayName }}}
-          {{{ inputPhone }}}
 
           <div class="user__button-container">
             {{{ linkChangeData }}}
@@ -133,8 +135,9 @@ const mapStateToProps = (state : Record<string, unknown> ) => {
   return {
     isLoading: state.isLoading,
     currentUser: state.currentUser,
-    emptyAvatar: state.emptyAvatar
+    emptyAvatar: state.emptyAvatar,
   };
 };
 
 export default connect(mapStateToProps)(UserPage);
+

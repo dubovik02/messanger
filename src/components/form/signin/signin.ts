@@ -8,6 +8,7 @@ import Pathnames from "../../../constants/pathnames";
 import AuthService from "../../../services/auth";
 import { connect } from "../../../utils/connect";
 import { Waiter } from "../../waiter";
+import Block from "../../../core/block";
 
 export class SigninForm extends FormWrapper {
 
@@ -225,7 +226,7 @@ export class SigninForm extends FormWrapper {
               eventName: 'blur',
               eventFunc: (e : Event) => {
                 e.preventDefault();
-                this.checkRepeatedPasswordInput();
+                this.checkRepeatedPasswordInput(e.target as HTMLInputElement, (this.getProperties() as FormProps).formState!.password);
               }
             }
           ],
@@ -306,10 +307,14 @@ export class SigninForm extends FormWrapper {
   }
 
   override checkValidityBeforeSubmit(): boolean {
+
+    const elemRepeatPass = ((this.getChildrens()['inputPassRepeat'] as Block).getChildrens()['input'] as Block).element;
+    const val = (this.getProperties() as FormProps).formState!.newPassword;
+
     let result = true;
     result = result && this.checkLoginInput();
     result = result && this.checkPasswordInput();
-    result = result && this.checkRepeatedPasswordInput();
+    result = result && this.checkRepeatedPasswordInput(elemRepeatPass, val);
     result = result && this.checkEmailInput();
     result = result && this.checkFirstNameInput();
     result = result && this.checkSecondNameInput();

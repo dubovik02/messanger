@@ -36,15 +36,27 @@ export default class ChangeDataPage extends Page {
           ],
         }),
 
-        avatar: new PictureButton({
-          className: 'pictureButton',
-          pictureStyleClass: 'pictureButton__image pictureButton__image_round pictureButton__image_size130',
+        //avatar: new PictureButton({
+        // className: 'pictureButton',
+        // pictureStyleClass: 'pictureButton__image pictureButton__image_round pictureButton__image_size130',
           //imagePath: (pageProps!.pageParams!['user' as keyof object] as User)!.avatarPath ? (pageProps!.pageParams!['user' as keyof object] as User)!.avatarPath : emptyAvatar,
-        }),
-        avatarLabel: new TextLabel({className: "textLabel textLabel_subtitle", labelText: ''}),
+        //}),
+        //avatarLabel: new TextLabel({className: "textLabel textLabel_subtitle", labelText: ''}),
         //avatarLabel: new TextLabel({className: "textLabel textLabel_subtitle", labelText: (pageProps!.pageParams!['user' as keyof object] as User)!.first_name! }),
         //form: new ChangeDataForm((pageProps!.pageParams!['user' as keyof object] as User)!),
-        form: new ChangeDataForm({}),
+        form: new ChangeDataForm(
+          {
+            className: 'dialog__form',
+            formState: {
+              email: '',
+              login: '',
+              first_name: '',
+              second_name: '',
+              display_name: '',
+              phone: '',
+            }
+          }
+        ),
       }
     );
   }
@@ -56,10 +68,6 @@ export default class ChangeDataPage extends Page {
         {{{ backButton }}}
       </div>
       <div class="user__container">
-          <div class="user__avatar-container">
-            {{{ avatar }}}
-            {{{ avatarLabel }}}
-          </div>
           {{{ form }}}
       </div>
     `;

@@ -9,6 +9,7 @@ import { Waiter } from "../../waiter";
 import AuthService from "../../../services/auth";
 import { FormProps } from "../../../types/formProps";
 import { SignInData } from "../../../types/sighinData";
+import pathes from '../../../constants/pathnames';
 
 class LoginForm extends FormWrapper {
 
@@ -52,7 +53,7 @@ class LoginForm extends FormWrapper {
               eventName: 'blur',
               eventFunc: (e : Event) => {
                 e.preventDefault();
-                this.checkLoginInput();
+                this.checkLoginInputToSignIn();
               }
             }
           ],
@@ -72,7 +73,7 @@ class LoginForm extends FormWrapper {
               eventName: 'blur',
               eventFunc: (e : Event) => {
                 e.preventDefault();
-                this.checkPasswordInput();
+                this.checkPasswordInputToSignIn();
               }
             }
           ],
@@ -93,7 +94,7 @@ class LoginForm extends FormWrapper {
               eventName: 'click',
               eventFunc: (e : Event) => {
                 e.preventDefault();
-                document.location.pathname = Pathnames.SIGNUP;
+                window.router.go(Pathnames.SIGNUP);
               }
             }
           ],
@@ -135,13 +136,12 @@ class LoginForm extends FormWrapper {
 
   override checkValidityBeforeSubmit(): boolean {
     let result = true;
-    result = result && this.checkLoginInput();
-    result = result && this.checkPasswordInput();
+    result = result && this.checkLoginInputToSignIn();
+    result = result && this.checkPasswordInputToSignIn();
     return result;
   }
 
 }
-
 
 const mapStateToProps = (state : Record<string, unknown> ) => {
   return {

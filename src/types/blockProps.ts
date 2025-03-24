@@ -9,4 +9,5 @@ export type BlockProps = {
     eventFunc: Function;
   }[];
   isActive?: boolean;
+  blockData?: Record<string, string>;
 };

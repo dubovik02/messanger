@@ -12,28 +12,26 @@ import Store, { StoreEvents } from './core/store';
 import Handlebars from 'handlebars';
 
 // тестовые данные - начало
-const chats : Block[] = [
-  new Components.ChatCard(
-    {
-      selected: false,
-      chatName: 'Николай',
-      owner: 'Вы',
-      lastChat: 'Изображение',
-      imagePath: avatar,
-      time: '12:32',
-      count: 1
+const chats =  [
+  {
+    "id": 123,
+    "title": "my-chat",
+    "avatar": "/123/avatar1.jpg",
+    "unread_count": 15,
+    "created_by": 12345,
+    "last_message": {
+      "user": {
+        "first_name": "Petya",
+        "second_name": "Pupkin",
+        "avatar": "/path/to/avatar.jpg",
+        "email": "my@email.com",
+        "login": "userLogin",
+        "phone": "8(911)-222-33-22"
+      },
+      "time": "2020-01-02T14:22:22.000Z",
+      "content": "this is message content"
     }
-  ),
-  new Components.ChatCard(
-    {
-      selected: true,
-      chatName: 'D. Tramp',
-      lastChat: 'Hey, I am here!',
-      imagePath: avatar,
-      time: '06:32',
-      count: 10
-    }
-  ),
+  }
 ];
 
 const chatsSet : Components.ChatSet[] = [
@@ -55,16 +53,6 @@ const chatsSet : Components.ChatSet[] = [
     }
   ),
 ];
-
-const user : User = {
-  email: 'adv@mail.ru',
-  login: 'Don',
-  first_name: 'Ivan',
-  second_name: 'Soloviev',
-  display_name: 'Ivanushka',
-  phone: '+78622153421',
-  avatarPath: avatar,
-}
 // тестовые данные - конец
 
 Object.entries(Components).forEach(([ name, template ]) => {
@@ -123,13 +111,52 @@ const serverErrRoute = {
 }
 
 const defaultState = {
-  currentUser: null,
+  currentUser: {},
   isLoading: false,
   signupError: null,
   loginError: null,
-  userChats: chats,
-  chatsSet: [],
-  emptyAvatar: emptyAvatar
+  cards: [
+    {
+      id: 123,
+      title: "my-chat",
+      avatar: "/123/avatar1.jpg",
+      unread_count: 15,
+      created_by: 12345,
+      last_message: {
+        user: {
+          first_name: "Petya",
+          second_name: "Pupkin",
+          avatar: "/path/to/avatar.jpg",
+          email: "my@email.com",
+          login: "userLogin",
+          phone: "8(911)-222-33-22"
+        },
+        time: "2020-01-02T14:22:22.000Z",
+        content: "this is message content"
+      }
+    },
+    {
+      id: 123,
+      title: "my-chat",
+      avatar: "/123/avatar1.jpg",
+      unread_count: 15,
+      created_by: 12345,
+      last_message: {
+        user: {
+          first_name: "Petya",
+          second_name: "Pupkin",
+          avatar: "/path/to/avatar.jpg",
+          email: "my@email.com",
+          login: "userLogin",
+          phone: "8(911)-222-33-22"
+        },
+        time: "2020-01-02T14:22:22.000Z",
+        content: "this is message content"
+      }
+    }
+  ],
+  userChats: [],
+  emptyAvatar: emptyAvatar,
 }
 
 window.router = new Router('.main-container', notFoundRoute);
@@ -152,3 +179,4 @@ window.router
   .start();
 
 //Anton, Qwerty12345
+

@@ -16,9 +16,9 @@ export default class UserApi extends BaseApi {
           credentials: 'include',
           mode: 'cors',
           headers: { "Content-Type": "application/json" },
-          data: JSON.stringify({
+          data: JSON.stringify(
             newUserData
-          })
+          )
         }
       )
     );
@@ -37,21 +37,17 @@ export default class UserApi extends BaseApi {
     );
   }
 
-  changeUserPassword(oldPass : string, newPass : string) {
+  changeUserPassword(data : object) {
     return this.parseResponse(
         this.serviceApi.put(
-        BaseApi.BASE_URL + apiProps.USER_PROFILE,
+        BaseApi.BASE_URL + apiProps.USER_PASSWORD,
         {
           credentials: 'include',
           mode: 'cors',
           headers: { "Content-Type": "application/json" },
-          data: JSON.stringify({
-            oldPassword : oldPass,
-            newPassword : newPass
-          })
+          data: JSON.stringify(data)
         }
       )
     );
   }
-
 }

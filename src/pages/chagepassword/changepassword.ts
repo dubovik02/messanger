@@ -36,16 +36,15 @@ export default class ChangePasswordPage extends Page {
           ],
         }),
 
-        avatar: new PictureButton({
-          className: 'pictureButton',
-          pictureStyleClass: 'pictureButton__image pictureButton__image_round pictureButton__image_size130',
-          //imagePath: (pageProps!.pageParams!['user' as keyof object] as User)!.avatarPath ? (pageProps!.pageParams!['user' as keyof object] as User)!.avatarPath : emptyAvatar,
-        }),
-
-        //avatarLabel: new TextLabel({className: "textLabel textLabel_subtitle", labelText: (pageProps!.pageParams!['user' as keyof object] as User)!.first_name! }),
-        avatarLabel: new TextLabel({className: "textLabel textLabel_subtitle", labelText: '' }),
-
-        form: new ChangePasswordForm()
+        form: new ChangePasswordForm(
+          {
+            className: 'dialog__form',
+            formState: {
+              oldPassword: '',
+              newPassword: '',
+            },
+          },
+        )
       }
     );
   }
@@ -57,10 +56,6 @@ export default class ChangePasswordPage extends Page {
         {{{ backButton }}}
       </div>
       <div class="user__container">
-          <div class="user__avatar-container">
-            {{{ avatar }}}
-            {{{ avatarLabel }}}
-          </div>
           {{{ form }}}
       </div>
     `;

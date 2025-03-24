@@ -11,36 +11,52 @@ export default class UserService {
   }
 
   changeUserProfile(newUserData : User) {
+
+    window.store.set({isLoading : true});
+
     this.userApi.changeUserProfile(newUserData)
     .then((res) => {
-      console.log(res);
+      window.router.go(Pathnames.USER);
+      window.store.set({currentUser : JSON.parse(res.responseText)});
     })
-    .catch((err) => {
-      console.log(err);
-      document.location = Pathnames.SERVER_ERR;
+    .catch(() => {
+      window.router.go(Pathnames.SERVER_ERR);
     })
+    .finally(() => {
+      window.store.set({isLoading : false});
+    });
   }
 
-  changeUserAvatar(data : FormData) {
+  changeUserAvatar(data : FormData, exitFunc : Function | null) {
+    window.store.set({isLoading : true});
+
     this.userApi.changeUserAvatar(data)
     .then((res) => {
-      console.log(res);
+      window.store.set({currentUser : JSON.parse(res.responseText)});
     })
-    .catch((err) => {
-      console.log(err);
-      document.location = Pathnames.SERVER_ERR;
+    .catch(() => {
+      window.router.go(Pathnames.SERVER_ERR);
     })
+    .finally(() => {
+      window.store.set({isLoading : false});
+      if (exitFunc instanceof Function) {
+        exitFunc.call(this);
+      }
+    });
   }
 
-  changeUserPassword(oldPass : string, newPass : string) {
-    this.userApi.changeUserPassword(oldPass, newPass)
-    .then((res) => {
-      console.log(res);
+  changeUserPassword(data : object) {
+    window.store.set({isLoading : true});
+    this.userApi.changeUserPassword(data)
+    .then(() => {
+      window.router.go(Pathnames.USER);
     })
-    .catch((err) => {
-      console.log(err);
-      document.location = Pathnames.SERVER_ERR;
+    .catch(() => {
+      window.router.go(Pathnames.SERVER_ERR);
     })
+    .finally(() => {
+      window.store.set({isLoading : false});
+    });
   }
 
 }

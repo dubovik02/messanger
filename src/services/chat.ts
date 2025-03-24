@@ -10,14 +10,7 @@ export default class ChatService {
   }
 
   getCurrentUsersChats(filter : string = '') {
-    this.chatApi.getChats(filter)
-    .then((res) => {
-      console.log(res);
-    })
-    .catch((err) => {
-      console.log(err);
-      document.location = Pathnames.SERVER_ERR;
-    })
+    return this.chatApi.getChats(filter);
   }
 
   createChat(title : string = 'Новый чат') {
@@ -38,7 +31,6 @@ export default class ChatService {
     })
     .catch((err) => {
       console.log(err);
-      //document.location = Pathnames.SERVER_ERR;
     })
   }
 
@@ -49,7 +41,6 @@ export default class ChatService {
     })
     .catch((err) => {
       console.log(err);
-      //document.location = Pathnames.SERVER_ERR;
     })
   }
 }

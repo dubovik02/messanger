@@ -1,5 +1,5 @@
 //import Block from "../../core/block";
-import { ChatCard, Chats, Link, PictureButton, SearchInput } from "../../components";
+import { ChatCard, Chats, Link, PictureButton, SearchInput, TextLabel } from "../../components";
 //import { ChatCardProps } from "../../types/chatCardProps";
 import dots from '../../assets/dots.png';
 import emptyAvatar from '../../assets/emptyAvatar.png';
@@ -11,12 +11,22 @@ import Pathnames from "../../constants/pathnames";
 import { connect } from "../../utils/connect";
 import ChatService from "../../services/chat";
 import { Waiter } from "../../components/waiter";
+import { PageProps } from "../../types/pageProps";
+import apiPath from "../../constants/api";
+import Block from "../../core/block";
+
+type SelectChatPageProps = PageProps & {
+  currentUser : Record<string, string>;
+  emptyAvatar : string;
+}
 
 class SelectChatPage extends Page {
 
-  constructor() {
+  constructor(props : SelectChatPageProps) {
+
     super(
       {
+        ...props,
         className: 'chat__root-container',
       },
       //child
@@ -26,9 +36,19 @@ class SelectChatPage extends Page {
           linkText: "Профиль >"
         }),
 
+        avatar: new PictureButton({
+          className: 'pictureButton',
+          pictureStyleClass: 'chat__user-image',
+          imagePath: props.currentUser.avatar ? (apiPath.RESOURCES + props.currentUser.avatar) : props.emptyAvatar,
+        }),
+
         searchInput: new SearchInput(),
 
-        chats: new Chats({}),
+        chatsList: new Chats(
+          {
+            className: 'chats-container',
+          }
+        ),
 
         chatsSet: [],
 
@@ -55,6 +75,11 @@ class SelectChatPage extends Page {
   }
 
   override render(): string {
+    const avatarElem = this.getChildrens()['avatar'] as Block;
+    const path = (this.getProperties() as SelectChatPageProps).currentUser.avatar;
+    const fullPath = path ? (apiPath.RESOURCES + path) : (this.getProperties() as SelectChatPageProps).emptyAvatar;
+    avatarElem.setProps({imagePath: fullPath});
+
     return `
         {{#if isLoading}}
           {{{ spinner }}}
@@ -64,21 +89,14 @@ class SelectChatPage extends Page {
           {{{ linkProfile }}}
           {{{ searchInput }}}
 
-          {{{ chats }}}
+          {{{ chatsList }}}
 
         </div>
         <div class="chat__props-container">
           <div class="chat__detail-container">
             <div class="chat__user-container">
-                <img class="chat__user-image"
-                  src="
-                    {{#if currentUser.avatar}}
-                        {{ currentUser.avatar }}
-                      {{else}}
-                        ${emptyAvatar}
-                    {{/if}}"
-                alt="User's image">
-                <h3 class="chat__user-name">{{ currentUser.first_name }}</h3>
+                {{{ avatar }}}
+                <h3 class="chat__user-name">{{ currentUser.display_name }}</h3>
             </div>
             {{{ dotsButton }}}
           </div>
@@ -98,6 +116,7 @@ const mapStateToProps = (state : Record<string, unknown>) => {
   return {
     isLoading: state.isLoading,
     currentUser: state.currentUser,
+    emptyAvatar: state.emptyAvatar,
   };
 };
 
