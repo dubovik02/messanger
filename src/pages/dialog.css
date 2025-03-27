@@ -10,12 +10,15 @@
 
 .dialog.dialog_modal {
   position: fixed;
-  top: calc(100vw/2 - 170px);
-  left: calc(100vh/2);
+  /* top: calc(100vw/2 - 170px);
+  left: calc(100vh/2); */
+  top: calc(100vh/2 - 170px);
+  left: calc(100vw/2 - 170px);
   width: 340px;
   align-items: center;
   justify-content: center;
-  display: none;
+  display: flex;
+  flex-direction: column;
   z-index: 2;
   background-color:lightblue;
   margin: auto;

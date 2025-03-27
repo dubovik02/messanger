@@ -3,7 +3,7 @@ import { StoreEvents } from "../core/store";
 import isEqual from "./isequal";
 
 export function connect(mapStateToProps : Function) {
-  return function (Component : typeof Block) {
+  return function (Component : any) {//тип конструктора блока не совпаддает с конструктором Block
     return class extends Component {
       private onChangeStoreCallback: () => void;
       constructor(props : object) {

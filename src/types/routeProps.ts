@@ -4,7 +4,7 @@ import { PageProps } from "./pageProps";
 
 export type RouteProps = {
   pathname: string;
-  pageClass: typeof Page;
+  //pageClass: typeof Page;
+  pageClass: any;
   page: Block | null;
-  //pageProps: PageProps;
 }

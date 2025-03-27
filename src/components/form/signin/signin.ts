@@ -308,8 +308,8 @@ export class SigninForm extends FormWrapper {
 
   override checkValidityBeforeSubmit(): boolean {
 
-    const elemRepeatPass = ((this.getChildrens()['inputPassRepeat'] as Block).getChildrens()['input'] as Block).element;
-    const val = (this.getProperties() as FormProps).formState!.newPassword;
+    const elemRepeatPass = (this.getChildrens()['inputPassRepeat'] as Block).element;
+    const val = (this.getProperties() as FormProps).formState!.password;
 
     let result = true;
     result = result && this.checkLoginInput();

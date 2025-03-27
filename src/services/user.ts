@@ -27,7 +27,7 @@ export default class UserService {
     });
   }
 
-  changeUserAvatar(data : FormData, exitFunc : Function | null) {
+  changeUserAvatar(data : FormData) {
     window.store.set({isLoading : true});
 
     this.userApi.changeUserAvatar(data)
@@ -39,9 +39,7 @@ export default class UserService {
     })
     .finally(() => {
       window.store.set({isLoading : false});
-      if (exitFunc instanceof Function) {
-        exitFunc.call(this);
-      }
+      window.store.set({isDialogShow : false});
     });
   }
 
@@ -58,5 +56,34 @@ export default class UserService {
       window.store.set({isLoading : false});
     });
   }
+
+  getUsersByLogin(data : object) {
+    return this.userApi.getUserByLogin(data);
+  }
+
+  // getAndAddUsersToChat(data : object, chatId : number) {
+  //   window.store.set({isLoading : true});
+  //   this.getUsersByLogin(data)
+  //   .then((res) => {
+  //     const users = JSON.parse(res.responseText);
+  //     this.addUsersToChat(users, chatId)
+  //     .then(() => {
+
+  //     })
+  //     .catch(() => {
+
+  //     })
+  //   })
+  //   .catch(() => {
+  //     window.router.go(Pathnames.SERVER_ERR);
+  //   })
+  //   .finally(() => {
+  //     window.store.set({isLoading : false});
+  //   });
+  // }
+
+  // addUsersToChat(users : object, chatId : number) {
+  //   return
+  // }
 
 }

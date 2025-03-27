@@ -25,6 +25,19 @@ export default class ChatApi extends BaseApi {
     )
   }
 
+  getChatUsers(chatId : number) {
+    return this.parseResponse(
+      this.serviceApi.get(
+        BaseApi.BASE_URL + `/chats/${chatId}/users` ,
+        {
+          credentials: 'include',
+          mode: 'cors',
+          headers: { "Content-Type": "application/json" },
+        }
+      )
+    )
+  }
+
   createChat(title : string) {
     return this.parseResponse(
         this.serviceApi.post(

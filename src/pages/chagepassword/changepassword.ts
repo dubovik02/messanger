@@ -7,6 +7,7 @@ import { ChangePasswordForm } from "../../components/form/changepassword";
 import { PictureButton, TextLabel } from "../../components";
 import { PageProps } from "../../types/pageProps";
 import Page from "../page";
+import Pathnames from "../../constants/pathnames";
 
 export default class ChangePasswordPage extends Page {
 
@@ -30,13 +31,13 @@ export default class ChangePasswordPage extends Page {
               eventName: 'click',
               eventFunc: (e : Event) => {
                 e.preventDefault();
-                window.history.back();
+                window.router.go(Pathnames.USER);
               }
             }
           ],
         }),
 
-        form: new ChangePasswordForm(
+        form: ((new ChangePasswordForm(
           {
             className: 'dialog__form',
             formState: {
@@ -44,7 +45,7 @@ export default class ChangePasswordPage extends Page {
               newPassword: '',
             },
           },
-        )
+        ) as unknown) as Block)
       }
     );
   }

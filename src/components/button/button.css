@@ -12,6 +12,10 @@
   cursor: pointer;
 }
 
+.button.button_margin-null {
+  margin: 20px 0 0 0;
+}
+
 .button.button_inactive {
   background-color: rgb(77 79 81);
 }

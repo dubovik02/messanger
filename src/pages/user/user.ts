@@ -1,18 +1,13 @@
 import ArrowButton from "../../components/arrowButton/arrowButton";
 import Block from "../../core/block";
 import arrowLeft from "../../assets/arrowL.png";
-import emptyAvatar from "../../assets/emptyAvatar.png";
-import { DataInput, Link, PictureButton, TextLabel } from "../../components";
-import { User } from "../../types/user";
-import inputText from "../../components/inputText/inputText";
+import { Link, PictureButton } from "../../components";
 import { PageProps } from "../../types/pageProps";
 import Page from "../page";
 import Pathnames from "../../constants/pathnames";
 import { connect } from "../../utils/connect";
 import AuthService from "../../services/auth";
 import apiPath from "../../constants/api";
-import { BlockProps } from "../../types/blockProps";
-
 
 type UserPageProps = PageProps & {
   currentUser : Record<string, string>;
@@ -24,7 +19,6 @@ class UserPage extends Page {
   constructor(props : UserPageProps) {
 
     super(
-     // 'div',
       //main
       {
         ...props,
@@ -40,7 +34,8 @@ class UserPage extends Page {
               eventName: 'click',
               eventFunc: (e : Event) => {
                 e.preventDefault();
-                window.router.back();
+                //window.router.back();
+                window.router.go(Pathnames.CHAT);
               }
             }
           ],

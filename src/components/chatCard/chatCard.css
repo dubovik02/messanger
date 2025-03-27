@@ -8,6 +8,7 @@
 }
 
 .chatCard.chatCard_selected {
+    display: flex;
     background-color: rgb(228 237 253 / 100%);
 }
 
@@ -22,6 +23,7 @@
     flex-direction: column;
     justify-content: start;
     margin: 0 auto 0 10px;
+    cursor: pointer;
 }
 
 .chatCard__msg-container {

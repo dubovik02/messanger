@@ -24,8 +24,9 @@ export default class AuthService {
         this.authApi.getUserInfo()
         .then((res) => {
           //window.router.go(pathes.CHAT);
-          window.store.set({currentUser : JSON.parse(res.responseText)});
-          window.router.go(pathes.CHAT);
+          // window.store.set({currentUser : JSON.parse(res.responseText)});
+          // window.router.go(pathes.CHAT);
+          this.onAutorization(res);
         })
         .catch((err) => {
           window.store.set({signupError: JSON.parse(err.responseText)!.reason});
@@ -80,7 +81,6 @@ export default class AuthService {
   logout() {
     this.authApi.logout()
     .then(() => {
-      //window.store.set({currentUser: {}});
       window.router.go(pathes.LOGIN);
       window.store.set({currentUser: {}});
     })

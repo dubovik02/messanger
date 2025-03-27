@@ -1,11 +1,8 @@
 import './style.css';
 
-import avatar from './assets/hafizov.jpg';
 import emptyAvatar from "./assets/emptyAvatar.png";
 import * as Components  from './components';
 import * as Pages from './pages';
-import Block from './core/block';
-import { User } from './types/user';
 import Router from './routing/router';
 import Pathnames from './constants/pathnames';
 import Store, { StoreEvents } from './core/store';
@@ -110,54 +107,35 @@ const serverErrRoute = {
   page: null
 }
 
-const defaultState = {
-  currentUser: {},
-  isLoading: false,
-  signupError: null,
-  loginError: null,
-  cards: [
-    {
-      id: 123,
-      title: "my-chat",
-      avatar: "/123/avatar1.jpg",
-      unread_count: 15,
-      created_by: 12345,
-      last_message: {
-        user: {
-          first_name: "Petya",
-          second_name: "Pupkin",
-          avatar: "/path/to/avatar.jpg",
-          email: "my@email.com",
-          login: "userLogin",
-          phone: "8(911)-222-33-22"
-        },
-        time: "2020-01-02T14:22:22.000Z",
-        content: "this is message content"
-      }
-    },
-    {
-      id: 123,
-      title: "my-chat",
-      avatar: "/123/avatar1.jpg",
-      unread_count: 15,
-      created_by: 12345,
-      last_message: {
-        user: {
-          first_name: "Petya",
-          second_name: "Pupkin",
-          avatar: "/path/to/avatar.jpg",
-          email: "my@email.com",
-          login: "userLogin",
-          phone: "8(911)-222-33-22"
-        },
-        time: "2020-01-02T14:22:22.000Z",
-        content: "this is message content"
-      }
-    }
-  ],
-  userChats: [],
-  emptyAvatar: emptyAvatar,
+let defaultState = {};
+const storeStr = sessionStorage.getItem('store');
+if (storeStr) {
+  defaultState = JSON.parse(storeStr);
 }
+else {
+  defaultState = {
+    currentUser: {},
+    isLoading: false,
+    signupError: null,
+    loginError: null,
+    userChats: [],
+    activeChatId: -1,
+    activeChatUser: [],
+    emptyAvatar: emptyAvatar,
+    isDialogShow: false,
+    isContextMenuShow: false,
+  }
+}
+// const defaultState = {
+//   currentUser: {},
+//   isLoading: false,
+//   signupError: null,
+//   loginError: null,
+//   userChats: [],
+//   emptyAvatar: emptyAvatar,
+//   isDialogShow: false,
+//   isContextMenuShow: false,
+// }
 
 window.router = new Router('.main-container', notFoundRoute);
 window.store = new Store(defaultState);
@@ -165,6 +143,7 @@ window.store = new Store(defaultState);
 window.store.on(StoreEvents.Updated, (prevState : object, newState : object) => {
   // console.log("prevState", prevState);
   // console.log("newState", newState);
+  sessionStorage.setItem('store', JSON.stringify(window.store.getState()));
 });
 
 window.router
@@ -180,3 +159,17 @@ window.router
 
 //Anton, Qwerty12345
 
+
+// Вопрос по HOC connect. - борьба с типами TS
+// `function connect(mapStateToProps : Function) {
+//   return function (Component type of Block)
+//     return class extends Component { ........`
+
+// Оборачиваю класс компонента
+// `class ChangePasswordForm extends FormWrapper {// FormWrapper extends Block
+//   constructor(props: PasswordFormProps) {
+//     super (
+//       { .............`
+
+// Компилятор ругается - Argument of type 'typeof ChangePasswordForm' is not assignable to parameter of type 'typeof Block'.
+// Types of construct signatures are incompatible.. Сигнатуры не совместимы. При этом все работает. Какой должен быть класс у Component - пока сломался...

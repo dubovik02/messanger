@@ -22,7 +22,7 @@ export default class SelectFileForm extends FormWrapper {
               e.preventDefault();
               const form = new FormData(this.element);
               const service = new UserService();
-              service.changeUserAvatar(form, (props.blockData.exit as Function));
+              service.changeUserAvatar(form);
             }
           }
         ],

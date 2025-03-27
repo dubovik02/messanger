@@ -14,6 +14,7 @@ export default {
   USER_PROFILE: '/user/profile',
   USER_AVATAR: '/user/profile/avatar',
   USER_PASSWORD: '/user/password',
+  USER_SEARCH: '/user/search',
 
   RESOURCES: 'https://ya-praktikum.tech/api/v2/resources'
 }

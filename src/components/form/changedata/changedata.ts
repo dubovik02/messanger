@@ -4,11 +4,11 @@ import { FormProps } from "../../../types/formProps";
 import { connect } from "../../../utils/connect";
 import { Button } from "../../button";
 import { DataInput } from "../../dataInput";
-import { ModalDialog } from "../../dialog";
+import { ModalDialog } from "../../dialog-wrapper";
 import { FormWrapper } from "../../form-wrapper";
 import inputText from "../../inputText/inputText";
 import { PictureButton } from "../../pictureButton";
-import { SelectFileDialog } from "../../selectfiledialog";
+import { SelectFileDialog } from "../../dialog/selectfiledialog";
 import { TextLabel } from "../../textLabel";
 import { Waiter } from "../../waiter";
 import apiPath from "../../../constants/api";
@@ -50,13 +50,14 @@ class ChangeDataForm extends FormWrapper {
               eventName: 'click',
               eventFunc: (e : Event) => {
                 e.preventDefault();
-                (this.getChildrens()['dialog'] as Block).show();
+                //(this.getChildrens()['dialog'] as Block).show();
+                window.store.set({isDialogShow: true});
               }
             }
           ],
         }),
 
-        dialog: new SelectFileDialog({}),
+        dialog: ((new SelectFileDialog({}) as unknown) as Block),
 
         inputEmail: new DataInput({
           className: 'dataInput',
@@ -260,7 +261,9 @@ class ChangeDataForm extends FormWrapper {
         {{{ spinner }}}
       {{/if}}
 
-      {{{ dialog }}}
+      {{#if isDialogShow}}
+        {{{ dialog }}}
+      {{/if}}
 
       <div class="user__avatar-container">
           {{{ avatar }}}
@@ -316,7 +319,8 @@ const mapStateToProps = (state : Record<string, unknown>) => {
     isLoading: state.isLoading,
     blockData: state.currentUser,
     emptyAvatar: state.emptyAvatar,
-    currentUser: state.currentUser
+    currentUser: state.currentUser,
+    isDialogShow: state.isDialogShow
   };
 };
 

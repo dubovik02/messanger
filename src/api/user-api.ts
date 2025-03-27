@@ -50,4 +50,18 @@ export default class UserApi extends BaseApi {
       )
     );
   }
+
+  getUserByLogin(data : object) {
+    return this.parseResponse(
+      this.serviceApi.post(
+      BaseApi.BASE_URL + apiProps.USER_SEARCH,
+        {
+          credentials: 'include',
+          mode: 'cors',
+          headers: { "Content-Type": "application/json" },
+          data: JSON.stringify(data)
+        }
+      )
+    );
+  }
 }

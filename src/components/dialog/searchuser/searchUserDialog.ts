@@ -1,26 +1,21 @@
-import { connect } from "../../utils/connect";
-import { Button } from "../button";
-import { ModalDialog } from "../dialog";
-import { SelectFileForm } from "../form/selectfile";
-import { Link } from "../link";
+import Block from "../../../core/block";
+import { connect } from "../../../utils/connect";
+import { ModalDialog } from "../../dialog-wrapper";
+import { SearchUserForm } from "../../form/searchuser";
+import { Link } from "../../link";
 
-class SelectFileDialog extends ModalDialog {
+class SearchUserDialog extends ModalDialog {
 
   constructor() {
+
     super(
       {
         className: 'dialog dialog_modal',
       },
       {
-        form: new SelectFileForm({
-          className: 'dialog__form',
-          formState: {
-            avatar: ''
-          },
-          blockData: {
-            exit: () => { this.hide()}
-          }
-        }),
+
+        form: ((new SearchUserForm({}) as unknown) as Block),
+
         linkClose: new Link({
           className: "link link_centered",
           linkText: "Закрыть",
@@ -29,13 +24,13 @@ class SelectFileDialog extends ModalDialog {
               eventName: 'click',
               eventFunc: (e : Event) => {
                 e.preventDefault();
-                this.hide();
+                window.store.set({isDialogShow: false});
               }
             }
           ],
         }),
       }
-    )
+    );
   }
 
   override render(): string {
@@ -50,9 +45,8 @@ class SelectFileDialog extends ModalDialog {
 const mapStateToProps = (state : Record<string, unknown> ) => {
   return {
     isLoading: state.isLoading,
-    currentUser: state.currentUser,
-    showDialog: state.showDialog
+    isDialogShow: state.isDialogShow,
   };
 };
 
-export default connect(mapStateToProps)(SelectFileDialog);
+export default connect(mapStateToProps)(SearchUserDialog);

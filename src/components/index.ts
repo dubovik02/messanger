@@ -11,6 +11,8 @@ export { PictureButton } from './pictureButton';
 export { DataInput } from './dataInput';
 export { Waiter } from "./waiter";
 export { Chats } from "./chats";
+export { ContextMenu } from "./contextMenu";
+export { MenuItem } from "./menu-item";
 
 export { TextLabelHBS } from './textLabel';
 export { DataInputHBS } from './dataInput';

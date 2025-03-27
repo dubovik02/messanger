@@ -7,6 +7,7 @@ import { ChangeDataForm } from "../../components/form/changedata";
 import { PictureButton, TextLabel } from "../../components";
 import { PageProps } from "../../types/pageProps";
 import Page from "../page";
+import Pathnames from "../../constants/pathnames";
 
 export default class ChangeDataPage extends Page {
 
@@ -30,7 +31,8 @@ export default class ChangeDataPage extends Page {
               eventName: 'click',
               eventFunc: (e : Event) => {
                 e.preventDefault();
-                window.history.back();
+                //window.history.back();
+                window.router.go(Pathnames.USER);
               }
             }
           ],
@@ -44,7 +46,7 @@ export default class ChangeDataPage extends Page {
         //avatarLabel: new TextLabel({className: "textLabel textLabel_subtitle", labelText: ''}),
         //avatarLabel: new TextLabel({className: "textLabel textLabel_subtitle", labelText: (pageProps!.pageParams!['user' as keyof object] as User)!.first_name! }),
         //form: new ChangeDataForm((pageProps!.pageParams!['user' as keyof object] as User)!),
-        form: new ChangeDataForm(
+        form: ((new ChangeDataForm(
           {
             className: 'dialog__form',
             formState: {
@@ -56,7 +58,7 @@ export default class ChangeDataPage extends Page {
               phone: '',
             }
           }
-        ),
+        ) as unknown) as Block),
       }
     );
   }
