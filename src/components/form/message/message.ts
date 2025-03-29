@@ -43,7 +43,7 @@ class MessageForm extends FormWrapper {
                     (res as WebSocket).send(JSON.stringify(data));
                     this.setProps({formState: {message : ''}});
                   })
-                  .catch((err) => {
+                  .catch(() => {
                     window.router.go(pathnames.SERVER_ERR);
                   })
                 }
