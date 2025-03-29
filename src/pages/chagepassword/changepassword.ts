@@ -1,11 +1,7 @@
 import ArrowButton from "../../components/arrowButton/arrowButton";
 import Block from "../../core/block";
 import arrowLeft from "../../assets/arrowL.png";
-import emptyAvatar from "../../assets/emptyAvatar.png";
-import { User } from "../../types/user";
 import { ChangePasswordForm } from "../../components/form/changepassword";
-import { PictureButton, TextLabel } from "../../components";
-import { PageProps } from "../../types/pageProps";
 import Page from "../page";
 import Pathnames from "../../constants/pathnames";
 
