@@ -1,7 +1,7 @@
 /              /
-/sign-up       /sign-up
+/sign-up       /.netlify/sign-up
 /user          /
-/settings      /settings
+/settings      /
 /messanger     /messanger
 /password      /password
 /404           /404
