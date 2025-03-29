@@ -54,7 +54,6 @@ export default class AuthService {
       .catch((err) => {
         window.store.set({loginError: JSON.parse(err.responseText)!.reason});
       })
-    //})
     .catch((err) => {
       window.store.set({loginError: JSON.parse(err.responseText)!.reason});
     })
@@ -77,8 +76,8 @@ export default class AuthService {
       window.router.go(pathes.LOGIN);
       window.store.set({currentUser: {}});
     })
-    .catch((err) => {
-      console.log(err);
+    .catch(() => {
+      window.router.go(pathes.SERVER_ERR);
     });
   }
 

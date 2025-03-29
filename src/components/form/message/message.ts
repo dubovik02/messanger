@@ -9,6 +9,7 @@ import { connect } from "../../../utils/connect";
 import WebSocketApi from "../../../api/ws-api";
 import Block from "../../../core/block";
 import { ChatSetProps } from "../../../types/chatSetProps";
+import pathnames from "../../../constants/pathnames";
 
 type MessageFormProps = FormProps & {
   token: string;
@@ -43,7 +44,7 @@ class MessageForm extends FormWrapper {
                     this.setProps({formState: {message : ''}});
                   })
                   .catch((err) => {
-                    console.log(err);
+                    window.router.go(pathnames.SERVER_ERR);
                   })
                 }
               }

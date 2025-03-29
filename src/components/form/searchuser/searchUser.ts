@@ -8,6 +8,7 @@ import { FormWrapper } from "../../form-wrapper";
 import { InputText } from "../../inputText";
 import { TextLabel } from "../../textLabel";
 import { Waiter } from "../../waiter";
+import pathnames from "../../../constants/pathnames";
 
 type SearchUserFormProps = FormProps & {
   activeChatId: number;
@@ -48,17 +49,17 @@ class SearchUserForm extends FormWrapper {
                         const users = JSON.parse(res.responseText);
                         window.store.set( { activeChatUsers: users });
                       })
-                      .catch((err) => {
-                        console.log(err);
+                      .catch(() => {
+                        window.router.go(pathnames.SERVER_ERR);
                       });
                     })
-                    .catch((err) => {
-                      console.log(err);
+                    .catch(() => {
+                      window.router.go(pathnames.SERVER_ERR);
                     })
                   }
                 })
-                .catch((err) => {
-                  console.log(err);
+                .catch(() => {
+                  window.router.go(pathnames.SERVER_ERR);
                 })
                 .finally(() => {
                   window.store.set({isLoading : false});
