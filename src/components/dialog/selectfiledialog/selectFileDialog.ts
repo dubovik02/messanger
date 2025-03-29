@@ -1,5 +1,4 @@
 import { connect } from "../../../utils/connect";
-import { Button } from "../../button";
 import { ModalDialog } from "../../dialog-wrapper";
 import { SelectFileForm } from "../../form/selectfile";
 import { Link } from "../../link";
@@ -26,7 +25,6 @@ class SelectFileDialog extends ModalDialog {
               eventName: 'click',
               eventFunc: (e : Event) => {
                 e.preventDefault();
-                //this.hide();
                 window.store.set({isDialogShow: false});
               }
             }

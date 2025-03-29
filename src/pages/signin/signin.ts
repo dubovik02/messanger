@@ -1,7 +1,6 @@
 import Block from "../../core/block";
 import { TextLabel } from "../../components";
 import { SigninForm } from "../../components/form/signin";
-import { PageProps } from "../../types/pageProps";
 import Page from "../page";
 
 export default class SigninPage extends Page {
@@ -14,7 +13,7 @@ export default class SigninPage extends Page {
       //pageProps,
       {
         title : new TextLabel({ className: "textLabel textLabel_subtitle", labelText: "Регистрация" }),
-        form: new SigninForm({})
+        form: ((new SigninForm({}) as unknown) as Block)
       },
     );
   }

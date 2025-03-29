@@ -4,7 +4,6 @@ import { FormProps } from "../../../types/formProps";
 import { connect } from "../../../utils/connect";
 import { Button } from "../../button";
 import { DataInput } from "../../dataInput";
-import { ModalDialog } from "../../dialog-wrapper";
 import { FormWrapper } from "../../form-wrapper";
 import inputText from "../../inputText/inputText";
 import { PictureButton } from "../../pictureButton";
@@ -50,7 +49,6 @@ class ChangeDataForm extends FormWrapper {
               eventName: 'click',
               eventFunc: (e : Event) => {
                 e.preventDefault();
-                //(this.getChildrens()['dialog'] as Block).show();
                 window.store.set({isDialogShow: true});
               }
             }
@@ -242,19 +240,11 @@ class ChangeDataForm extends FormWrapper {
   override render(): string {
 
     const props = (this.getProperties() as ChangeDataFormProps);
-    //const {avatar, inputEmail, inputLogin, inputFirstName, inputSecondName, inputDisplayName, inputPhone} = this.getChildrens();
     const { avatar } = this.getChildrens();
 
     const path = props.currentUser.avatar;
     const fullPath = path ? (apiPath.RESOURCES + path) : props.emptyAvatar;
     (avatar as Block).setProps({imagePath: fullPath});
-
-    // ((inputEmail as Block).getChildrens()['input'] as Block).setProps({attributes: [
-    //   { name: "name", value: "email" },
-    //   { name: "id", value: "email" },
-    //   { name: "placeholder", value: "Введите e-mail"},
-    //   { name: "value", value: props.currentUser.email ? props.currentUser.email : '' }
-    // ]})
 
     return `
       {{#if isLoading}}

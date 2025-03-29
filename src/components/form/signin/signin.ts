@@ -41,7 +41,6 @@ export class SigninForm extends FormWrapper {
       },
       //childrens
       {
-        //title : new TextLabel({ className: "textLabel textLabel_subtitle", labelText: "Регистрация" }),
 
         emailLabel : new TextLabel({ className: "textLabel textLabel_text textLabel_text-grey", labelText: "Почта", inputId: "email" }),
         inputEmail : new InputText({

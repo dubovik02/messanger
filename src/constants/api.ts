@@ -16,5 +16,9 @@ export default {
   USER_PASSWORD: '/user/password',
   USER_SEARCH: '/user/search',
 
-  RESOURCES: 'https://ya-praktikum.tech/api/v2/resources'
+  GET_TOKEN: '/chats/token/',
+
+  RESOURCES: 'https://ya-praktikum.tech/api/v2/resources',
+
+  WS_BASE_URL: 'wss://ya-praktikum.tech/ws/chats'
 }

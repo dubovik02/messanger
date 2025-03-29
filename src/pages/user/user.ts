@@ -34,7 +34,6 @@ class UserPage extends Page {
               eventName: 'click',
               eventFunc: (e : Event) => {
                 e.preventDefault();
-                //window.router.back();
                 window.router.go(Pathnames.CHAT);
               }
             }
@@ -42,7 +41,7 @@ class UserPage extends Page {
         }),
 
         avatar: new PictureButton({
-          className: 'pictureButton',
+          className: 'pictureButton pictureButton_cursor-default',
           pictureStyleClass: 'pictureButton__image pictureButton__image_round pictureButton__image_size130',
           imagePath: props.currentUser.avatar ? (apiPath.RESOURCES + props.currentUser.avatar) : props.emptyAvatar,
         }),

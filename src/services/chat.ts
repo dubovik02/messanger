@@ -1,5 +1,4 @@
 import ChatApi from "../api/chat-api";
-import Pathnames from "../constants/pathnames";
 
 export default class ChatService {
 

@@ -1,5 +1,4 @@
 import Block from "../../../core/block";
-import user from "../../../pages/user/user";
 import ChatService from "../../../services/chat";
 import UserService from "../../../services/user";
 import { FormProps } from "../../../types/formProps";
@@ -38,13 +37,20 @@ class SearchUserForm extends FormWrapper {
                 .then((res) => {
                   const users = JSON.parse(res.responseText);
                   const usersId : number[] = [];
-                  users.forEach((idx : Record<string, unknown>) => {
-                    usersId.push(idx.id as number);
-                  })
+                  usersId.push(users[0].id as number);
                   if (users) {
                     const chatService = new ChatService();
                     chatService.addUsersToChat(usersId, props.activeChatId)
                     .then(() => {
+                      const service = new ChatService();
+                      service.getChatUsers((this.getProperties() as SearchUserFormProps).activeChatId)
+                      .then((res) => {
+                        const users = JSON.parse(res.responseText);
+                        window.store.set( { activeChatUsers: users });
+                      })
+                      .catch((err) => {
+                        console.log(err);
+                      });
                     })
                     .catch((err) => {
                       console.log(err);

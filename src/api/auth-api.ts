@@ -50,6 +50,20 @@ export default class AuthApi extends BaseApi {
     );
   }
 
+  getToken(chatId : number) {
+    return this.parseResponse(
+      this.serviceApi.post(
+        BaseApi.BASE_URL + apiProps.GET_TOKEN + chatId,
+        {
+          credentials: 'include',
+          mode: 'cors',
+          headers: { "Content-Type": "application/json" },
+          data: JSON.stringify({chatId : chatId})
+        }
+      )
+    );
+  }
+
   logout() {
     return this.parseResponse(
       this.serviceApi.post(

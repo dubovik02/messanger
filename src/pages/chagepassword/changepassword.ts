@@ -11,12 +11,9 @@ import Pathnames from "../../constants/pathnames";
 
 export default class ChangePasswordPage extends Page {
 
-  //constructor(user : User) {
-  //constructor(pageProps : PageProps) {
   constructor() {
 
     super(
-      //'div',
       //main
       {
         className: 'user',

@@ -1,6 +1,9 @@
+import WebSocketApi from "../../api/ws-api";
 import Block from "../../core/block";
+import AuthService from "../../services/auth";
 import ChatService from "../../services/chat";
 import { ChatCardProps } from "../../types/chatCardProps";
+import { ChatSetProps } from "../../types/chatSetProps";
 import { ChatsProps } from "../../types/chatsProps";
 import { connect } from "../../utils/connect";
 import { ChatCard } from "../chatCard";
@@ -8,6 +11,9 @@ import { ChatCard } from "../chatCard";
 type ExtendedChatsProps = ChatsProps & {
   userChats: ChatCardProps[];
   activeIndex: number;
+  currentUser: Record<string, unknown>;
+  activeChatIncomeMsg: ChatSetProps[];
+  token: string;
 }
 
 class Chats extends Block {
@@ -25,8 +31,7 @@ class Chats extends Block {
               {
                 eventName : 'click',
                 eventFunc : () => {
-                  this.setActiveindex(index, item.id)
-                  this.getActiveChatUsers(item.id);
+                  this.connectChat(index, item);
                 },
               }
             ]
@@ -50,8 +55,7 @@ class Chats extends Block {
           {
             eventName : 'click',
             eventFunc : () => {
-              this.setActiveindex(index, item.id)
-              this.getActiveChatUsers(item.id);
+              this.connectChat(index, item);
             },
           }
         ]
@@ -109,12 +113,71 @@ class Chats extends Block {
 
     });
   }
+
+  getNewChatMsg(chatId : number) {
+    const props = this.getProperties() as ExtendedChatsProps;
+    if (props.token && chatId && props.currentUser.id) {
+      WebSocketApi.connect(chatId, props.currentUser.id as number, props.token, this.makeIncomeMessage)
+      .then((res) => {
+        (res as WebSocket).send(JSON.stringify({
+          content: '0',
+          type: 'get old',
+        }));
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+    }
+  }
+
+  setUpMsgListener(chatId : number) {
+
+    const service = new AuthService();
+    service.getToken(chatId)
+    .then((res) => {
+      const token = JSON.parse(res.responseText).token;
+      window.store.set({ token: token });
+      this.getNewChatMsg(chatId);
+    })
+    .catch((err) => {
+      console.log(err);
+    })
+    .finally(() => {
+      window.store.set({ isLoading : false });
+    })
+  }
+
+  makeIncomeMessage = (data : string) => {
+    let incomeMsg = (this.getProperties() as ExtendedChatsProps).activeChatIncomeMsg;
+    const msg = JSON.parse(data);
+    if (Array.isArray(msg)) {
+      if (msg.length) {
+        incomeMsg = incomeMsg.concat(msg);
+      }
+    }
+    else {
+      incomeMsg.push(msg);
+    }
+    window.store.set({ activeChatIncomeMsg : incomeMsg });
+  }
+
+  connectChat(index : number, item : ChatCardProps) {
+    window.store.set({ isLoading : true });
+    window.store.set({ activeChatIncomeMsg : [] });
+    this.setActiveindex(index, item.id)
+    this.getActiveChatUsers(item.id);
+    this.setUpMsgListener(item.id);
+  }
 }
 
 const mapStateToProps = (state : Record<string, unknown> ) => {
   return {
     userChats: state.userChats,
-    activeChatUsers: state.activeChatUsers
+    activeChatUsers: state.activeChatUsers,
+    currentUser : state.currentUser,
+    activeChatIncomeMsg: state.activeChatIncomeMsg,
+    activeChatOutcomeMsg: state.activeChatOutcomeMsg,
+    token: state.token
   };
 };
 

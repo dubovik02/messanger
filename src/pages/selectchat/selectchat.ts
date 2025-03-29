@@ -1,4 +1,4 @@
-import { Button, Chats, ContextMenu, Link, MenuItem, PictureButton, SearchInput, TextLabel } from "../../components";
+import { Button, Chats, ChatSet, ContextMenu, Link, MenuItem, PictureButton, SearchInput, TextLabel } from "../../components";
 import dots from '../../assets/dots.png';
 import trash from '../../assets/trash.png';
 import { MessageForm } from "../../components/form/message";
@@ -47,7 +47,7 @@ class SelectChatPage extends Page {
         }),
 
         avatar: new PictureButton({
-          className: 'pictureButton',
+          className: 'pictureButton pictureButton_cursor-default',
           pictureStyleClass: 'chat__user-image',
           imagePath: props.currentUser.avatar ? (apiPath.RESOURCES + props.currentUser.avatar) : props.emptyAvatar,
         }),
@@ -61,7 +61,11 @@ class SelectChatPage extends Page {
           }
         )) as unknown) as Block,
 
-        chatsSet: [],
+        chatsSet: ((new ChatSet(
+          {
+            className: 'chat__talk-container',
+          }
+        )) as unknown) as Block,
 
         searchUserDialog: ((new SearchUserDialog({}) as unknown) as Block),
 
@@ -124,7 +128,9 @@ class SelectChatPage extends Page {
           }
         ),
 
-        form: ((new MessageForm({}) as unknown) as Block),
+        form: ((new MessageForm({
+        }) as unknown) as Block),
+
         spinner: new Waiter()
       }
 
@@ -140,9 +146,6 @@ class SelectChatPage extends Page {
     avatarElem.setProps({imagePath: fullPath});
 
     return `
-        {{#if isLoading}}
-          {{{ spinner }}}
-        {{/if}}
 
         {{#if isContextMenuShow}}
           {{{ contextMenu }}}
@@ -161,19 +164,27 @@ class SelectChatPage extends Page {
 
         </div>
         <div class="chat__props-container">
-          <div class="chat__detail-container">
-            <div class="chat__user-container">
-                {{{ avatar }}}
-                <h3 class="chat__user-name">{{ currentUser.display_name }}</h3>
+
+          {{#if isLoading}}
+            {{{ spinner }}}
+          {{/if}}
+
+            <div class="chat__detail-container">
+            {{#if activeChatId}}
+
+              <div class="chat__user-container">
+                  {{{ avatar }}}
+                  <h3 class="chat__user-name">{{ currentUser.display_name }}</h3>
+              </div>
+              {{{ dotsButton }}}
+
+            {{else}}
+              {{> TextLabelHBS classStyle="textLabel textLabel_service-page-text" labelText='Веберете или создайте чат' }}
+            {{/if}}
             </div>
-            {{{ dotsButton }}}
-          </div>
-          <div class="chat__talk-container">
-            <p class="chat__date">1 марта</p>
-            {{#each chatsSet}}
-              {{{ this }}}
-            {{/each}}
-          </div>
+
+            {{{ chatsSet }}}
+
           {{{ form }}}
         </div>
     `;
@@ -187,23 +198,25 @@ class SelectChatPage extends Page {
     childMenuItem.push(addMenu);
 
     chatUsers.forEach( (item) => {
-      const userElem = new MenuItem({
-        className: 'menu-item',
-        menuText: (item.login as string),
-        buttonImage: trash,
-        onButtonClick: () => {
-          const service = new ChatService();
-          service.deleteUsersFromChat([item.id as number], (this.getProperties() as SelectChatPageProps).activeChatId).
-          then(() => {
-            (userElem.element as HTMLElement).innerText = '';
-          })
-          .catch((err) => {
-            console.log(err);
-          });
-        }
-      })
-
-      childMenuItem.push(userElem);
+      const props = (this.getProperties() as SelectChatPageProps);
+      if (item.id != props.currentUser.id) {
+        const userElem = new MenuItem({
+          className: 'menu-item',
+          menuText: (item.login as string),
+          buttonImage: trash,
+          onButtonClick: () => {
+            const service = new ChatService();
+            service.deleteUsersFromChat([item.id as number], props.activeChatId).
+            then(() => {
+              (userElem.element as HTMLElement).innerText = '';
+            })
+            .catch((err) => {
+              console.log(err);
+            });
+          }
+        })
+        childMenuItem.push(userElem);
+      }
     })
 
     return new ContextMenu(

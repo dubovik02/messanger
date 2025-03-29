@@ -9,7 +9,6 @@ import { Waiter } from "../../waiter";
 import AuthService from "../../../services/auth";
 import { FormProps } from "../../../types/formProps";
 import { SignInData } from "../../../types/sighinData";
-import pathes from '../../../constants/pathnames';
 
 class LoginForm extends FormWrapper {
 
@@ -38,7 +37,6 @@ class LoginForm extends FormWrapper {
       },
       //childrens
       {
-        //title : new TextLabel({ className: "textLabel textLabel_subtitle", labelText: "Вход" }),
 
         loginLabel : new TextLabel({ className: "textLabel textLabel_text textLabel_text-grey", labelText: "Логин", inputId: "login" }),
         inputLogin : new InputText({

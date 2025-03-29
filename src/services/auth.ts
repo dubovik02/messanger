@@ -17,15 +17,10 @@ export default class AuthService {
 
     window.store.set({ isLoading: true });
 
-    //this.logout()
-    //.then(() => {
       this.authApi.signup(userData)
       .then(() => {
         this.authApi.getUserInfo()
         .then((res) => {
-          //window.router.go(pathes.CHAT);
-          // window.store.set({currentUser : JSON.parse(res.responseText)});
-          // window.router.go(pathes.CHAT);
           this.onAutorization(res);
         })
         .catch((err) => {
@@ -35,7 +30,6 @@ export default class AuthService {
       .catch((err) => {
         window.store.set({signupError: JSON.parse(err.responseText)!.reason});
       })
-     //})
     .catch((err) => {
       window.store.set({signupError: JSON.parse(err.responseText)!.reason});
     })
@@ -47,15 +41,10 @@ export default class AuthService {
   signin(data : SignInData) {
 
     window.store.set({ isLoading: true });
-
-    //this.logout()
-    //.then(() => {
       return this.authApi.signin(data)
       .then(() => {
         return this.getUserInfo()
         .then((res) => {
-          // window.store.set({currentUser : JSON.parse(res.responseText)});
-          // window.router.go(pathes.CHAT);
           this.onAutorization(res);
         })
         .catch((err) => {
@@ -76,6 +65,10 @@ export default class AuthService {
 
   getUserInfo() {
     return this.authApi.getUserInfo();
+  }
+
+  getToken(chatId : number) {
+    return this.authApi.getToken(chatId);
   }
 
   logout() {

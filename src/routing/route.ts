@@ -8,15 +8,8 @@ export default class Route {
     this.props = props;
   }
 
-  // navigate(pathname : string) {
-  //   if (this.match(pathname)) {
-  //     this.render();
-  //   }
-  // }
-
   leave() {
     if (this.props.page) {
-      //this.props.page.hide();
     }
   }
 
@@ -37,8 +30,8 @@ export default class Route {
       while (root.firstChild) {
         root.removeChild(root.firstChild);
       }
-      root.insertAdjacentElement('beforeend', this.props.page.getContent());
-      this.props.page.componentDidMount();
+      root.insertAdjacentElement('beforeend', this.props.page!.getContent());
+      this.props.page!.componentDidMount();
     }
   }
 }

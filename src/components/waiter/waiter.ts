@@ -13,8 +13,8 @@ export default class Waiter extends Block {
 
   override render(): string {
     return `
-            <i class="circle-preloader"></i>
-            <p class="preloader-container__title"></p>
+      <i class="circle-preloader"></i>
+      <p class="preloader-container__title"></p>
     `;
   }
 }

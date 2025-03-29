@@ -10,10 +10,6 @@ export default class ChatCard extends Block {
       props.className = 'class';
     }
 
-    // if (props.isActive) {
-    //   props.className = props.className + ' chatCard_selected';
-    // }
-
     super(
       'div',
       props,
@@ -22,24 +18,6 @@ export default class ChatCard extends Block {
 
   override render(): string {
 
-//     avatar
-// :
-// null
-// created_by
-// :
-// 3646
-// id
-// :
-// 53717
-// last_message
-// :
-// null
-// title
-// :
-// "Новый чат"
-// unread_count
-// :
-//0
     const props = this.getProperties() as ChatCardProps;
     let timeStamp = '';
 

@@ -1,11 +1,8 @@
-import Block from "../../../core/block";
 import UserService from "../../../services/user";
 import { FormProps } from "../../../types/formProps";
-import { connect } from "../../../utils/connect";
 import { Button } from "../../button";
 import { FormWrapper } from "../../form-wrapper"
 import { InputText } from "../../inputText";
-import { TextLabel } from "../../textLabel";
 import { Waiter } from "../../waiter";
 
 export default class SelectFileForm extends FormWrapper {
@@ -21,8 +18,11 @@ export default class SelectFileForm extends FormWrapper {
             eventFunc: (e : Event) => {
               e.preventDefault();
               const form = new FormData(this.element);
-              const service = new UserService();
-              service.changeUserAvatar(form);
+              const result = form.get('avatar') as File;
+              if (result.size != 0) {
+                const service = new UserService();
+                service.changeUserAvatar(form);
+              }
             }
           }
         ],

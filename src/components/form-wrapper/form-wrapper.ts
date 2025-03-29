@@ -69,7 +69,7 @@ export default class FormWrapper extends Block {
     return this.checkInputValidity(
       'password',
       elem instanceof HTMLInputElement ? elem : this.getChildrens()['inputPass'] as Block,
-      RegExpression.password,
+      RegExpression.message,
       this.getChildrens()['errorLabelPass'] as Block,
       ErrMessages.EMPTY_ERR
     );
@@ -217,7 +217,7 @@ export default class FormWrapper extends Block {
           message: val
       }
     });
-    return InputValidator.checkInputData(val, RegExpression.message);
+    return val !== '';
 
   }
 }

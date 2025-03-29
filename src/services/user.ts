@@ -60,30 +60,4 @@ export default class UserService {
   getUsersByLogin(data : object) {
     return this.userApi.getUserByLogin(data);
   }
-
-  // getAndAddUsersToChat(data : object, chatId : number) {
-  //   window.store.set({isLoading : true});
-  //   this.getUsersByLogin(data)
-  //   .then((res) => {
-  //     const users = JSON.parse(res.responseText);
-  //     this.addUsersToChat(users, chatId)
-  //     .then(() => {
-
-  //     })
-  //     .catch(() => {
-
-  //     })
-  //   })
-  //   .catch(() => {
-  //     window.router.go(Pathnames.SERVER_ERR);
-  //   })
-  //   .finally(() => {
-  //     window.store.set({isLoading : false});
-  //   });
-  // }
-
-  // addUsersToChat(users : object, chatId : number) {
-  //   return
-  // }
-
 }

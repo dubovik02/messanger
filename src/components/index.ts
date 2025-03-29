@@ -5,6 +5,7 @@ export { Link } from './link';
 export { SearchInput } from './searchInput';
 export { ChatCard } from './chatCard';
 export { ChatSet } from './chatSet';
+export { ChatMessage } from './chatMsg';
 export { ArrowButton } from './arrowButton';
 export { MsgInput } from './msgInput';
 export { PictureButton } from './pictureButton';
