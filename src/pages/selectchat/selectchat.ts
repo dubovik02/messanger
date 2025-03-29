@@ -210,8 +210,8 @@ class SelectChatPage extends Page {
             then(() => {
               (userElem.element as HTMLElement).innerText = '';
             })
-            .catch((err) => {
-              console.log(err);
+            .catch(() => {
+              window.router.go(Pathnames.SERVER_ERR);
             });
           }
         })

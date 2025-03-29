@@ -7,6 +7,7 @@ import { ChatSetProps } from "../../types/chatSetProps";
 import { ChatsProps } from "../../types/chatsProps";
 import { connect } from "../../utils/connect";
 import { ChatCard } from "../chatCard";
+import pathnames from "../../constants/pathnames";
 
 type ExtendedChatsProps = ChatsProps & {
   userChats: ChatCardProps[];
@@ -106,8 +107,8 @@ class Chats extends Block {
       const users = JSON.parse(res.responseText);
       window.store.set( { activeChatUsers: users });
     })
-    .catch((err) => {
-      console.log(err);
+    .catch(() => {
+      window.router.go(pathnames.SERVER_ERR);
     })
     .finally(() => {
 
@@ -124,8 +125,8 @@ class Chats extends Block {
           type: 'get old',
         }));
       })
-      .catch((err) => {
-        console.log(err);
+      .catch(() => {
+        window.router.go(pathnames.SERVER_ERR);
       })
     }
   }
@@ -139,8 +140,8 @@ class Chats extends Block {
       window.store.set({ token: token });
       this.getNewChatMsg(chatId);
     })
-    .catch((err) => {
-      console.log(err);
+    .catch(() => {
+      window.router.go(pathnames.SERVER_ERR);
     })
     .finally(() => {
       window.store.set({ isLoading : false });

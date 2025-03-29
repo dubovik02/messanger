@@ -1,4 +1,5 @@
 import ChatApi from "../api/chat-api";
+import Pathnames from "../constants/pathnames";
 
 export default class ChatService {
 
@@ -26,12 +27,12 @@ export default class ChatService {
         const data = JSON.parse(str);
         window.store.set({userChats : data});
       })
-      .catch((err) => {
-        console.log(err);
+      .catch(() => {
+        window.router.go(Pathnames.SERVER_ERR);
       })
     })
-    .catch((err) => {
-      console.log(err);
+    .catch(() => {
+      window.router.go(Pathnames.SERVER_ERR);
     })
     .finally(() => {
       window.store.set({isLoading : false});
