@@ -1,5 +1,5 @@
 import { BlockProps } from "./blockProps";
 
 export type FormProps = BlockProps & {
-  formState?: object;
+  formState?: Record<string, string>;
 }

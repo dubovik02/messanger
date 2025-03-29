@@ -1,19 +1,27 @@
 import ArrowButton from "../../components/arrowButton/arrowButton";
 import Block from "../../core/block";
 import arrowLeft from "../../assets/arrowL.png";
-import emptyAvatar from "../../assets/emptyAvatar.png";
-import { DataInput, Link, PictureButton, TextLabel } from "../../components";
-import { User } from "../../types/user";
-import inputText from "../../components/inputText/inputText";
+import { Link, PictureButton } from "../../components";
+import { PageProps } from "../../types/pageProps";
+import Page from "../page";
+import Pathnames from "../../constants/pathnames";
+import { connect } from "../../utils/connect";
+import AuthService from "../../services/auth";
+import apiPath from "../../constants/api";
 
-export default class UserPage extends Block {
+type UserPageProps = PageProps & {
+  currentUser : Record<string, string>;
+  emptyAvatar : string;
+}
 
-  constructor(user : User) {
+class UserPage extends Page {
+
+  constructor(props : UserPageProps) {
 
     super(
-      'div',
       //main
       {
+        ...props,
         className: 'user',
       },
       //children
@@ -21,149 +29,75 @@ export default class UserPage extends Block {
         backButton: new ArrowButton({
           className: 'arrowButton',
           imagePath: arrowLeft,
+          events: [
+            {
+              eventName: 'click',
+              eventFunc: (e : Event) => {
+                e.preventDefault();
+                window.router.go(Pathnames.CHAT);
+              }
+            }
+          ],
         }),
 
         avatar: new PictureButton({
-          className: 'pictureButton',
+          className: 'pictureButton pictureButton_cursor-default',
           pictureStyleClass: 'pictureButton__image pictureButton__image_round pictureButton__image_size130',
-          imagePath: user.avatarPath ? user.avatarPath : emptyAvatar,
-        }),
-
-        avatarLabel: new TextLabel({className: "textLabel textLabel_subtitle", labelText: user.first_name! }),
-
-        inputEmail: new DataInput({
-          className: 'dataInput',
-          forName: "email",
-          labelText: "Почта",
-          },
-          {
-            input: new inputText({
-              className: "dataInput__input",
-              attributes: [
-                { name: "name", value: "email" },
-                { name: "id", value: "email" },
-                { name: "placeholder", value: "Введите e-mail"},
-                { name: "value", value: user.email ? user.email : ''},
-                { name: "readonly", value: "readonly"}
-              ],
-            }
-          ),
-        }),
-
-        inputLogin: new DataInput({
-          className: 'dataInput',
-          forName: "login",
-          labelText: "Логин",
-          },
-          {
-            input: new inputText({
-              className: "dataInput__input",
-              attributes: [
-                { name: "name", value: "login" },
-                { name: "id", value: "login" },
-                { name: "placeholder", value: "Введите логин"},
-                { name: "value", value: user.login ? user.login : ''},
-                { name: "readonly", value: "readonly"}
-              ],
-            }
-          ),
-        }),
-
-        inputFirstName: new DataInput({
-          className: 'dataInput',
-          forName: "first_name",
-          labelText: "Имя",
-          },
-          {
-            input: new inputText({
-              className: "dataInput__input",
-              attributes: [
-                { name: "name", value: "first_name" },
-                { name: "id", value: "first_name" },
-                { name: "placeholder", value: "Введите имя"},
-                { name: "value", value: user.first_name ? user.first_name : ''},
-                { name: "readonly", value: "readonly"}
-              ],
-            }
-          ),
-        }),
-
-        inputSecondName: new DataInput({
-          className: 'dataInput',
-          forName: "second_name",
-          labelText: "Фамилия",
-          },
-          {
-            input: new inputText({
-              className: "dataInput__input",
-              attributes: [
-                { name: "name", value: "second_name" },
-                { name: "id", value: "second_name" },
-                { name: "placeholder", value: "Введите фамилию"},
-                { name: "value", value: user.second_name ? user.second_name : ''},
-                { name: "readonly", value: "readonly"}
-              ],
-            }
-          ),
-        }),
-
-        inputDisplayName: new DataInput({
-          className: 'dataInput',
-          forName: "display_name",
-          labelText: "Имя в чате",
-          },
-          {
-            input: new inputText({
-              className: "dataInput__input",
-              attributes: [
-                { name: "name", value: "display_name" },
-                { name: "id", value: "display_name" },
-                { name: "placeholder", value: "Введите имя в чате"},
-                { name: "value", value: user.display_name ? user.display_name : ''},
-                { name: "readonly", value: "readonly"}
-              ],
-            }
-          ),
-        }),
-
-        inputPhone: new DataInput({
-          className: 'dataInput',
-          forName: "phone",
-          labelText: "Телефон",
-          },
-          {
-            input: new inputText({
-              className: "dataInput__input",
-              attributes: [
-                { name: "name", value: "phone" },
-                { name: "id", value: "phone" },
-                { name: "placeholder", value: "Введите телефон"},
-                { name: "value", value: user.phone ? user.phone : ''},
-                { name: "readonly", value: "readonly"}
-              ],
-            }
-          ),
+          imagePath: props.currentUser.avatar ? (apiPath.RESOURCES + props.currentUser.avatar) : props.emptyAvatar,
         }),
 
         linkChangeData: new Link({
           className: "link link_uderlined",
           linkText: "Изменить данные",
+          events: [
+            {
+              eventName: 'click',
+              eventFunc: (e : Event) => {
+                e.preventDefault();
+                window.router.go(Pathnames.CHANGEDATA);
+              }
+            }
+          ],
         }),
 
         linkChangePass: new Link({
           className: "link link_uderlined",
           linkText: "Изменить пароль",
+          events: [
+            {
+              eventName: 'click',
+              eventFunc: (e : Event) => {
+                e.preventDefault();
+                window.router.go(Pathnames.PASSWORD);
+              }
+            }
+          ],
         }),
 
         linkExit: new Link({
           className: "link link_uderlined link_red",
           linkText: "Выйти",
+          events: [
+            {
+              eventName: 'click',
+              eventFunc: (e : Event) => {
+                e.preventDefault();
+                const auth = new AuthService();
+                auth.logout();
+              }
+            }
+          ],
         }),
       }
     );
   }
 
   override render(): string {
+
+    const avatarElem = this.getChildrens()['avatar'] as Block;
+    const path = (this.getProperties() as UserPageProps).currentUser.avatar;
+    const fullPath = path ? (apiPath.RESOURCES + path) : (this.getProperties() as UserPageProps).emptyAvatar;
+    avatarElem.setProps({imagePath: fullPath});
 
     return `
       <div class="user__back-container">
@@ -172,14 +106,14 @@ export default class UserPage extends Block {
       <div class="user__container">
           <div class="user__avatar-container">
             {{{ avatar }}}
-            {{{ avatarLabel }}}
+            {{> TextLabelHBS classStyle="textLabel textLabel_subtitle" labelText=currentUser.display_name}}
           </div>
-          {{{ inputEmail }}}
-          {{{ inputLogin }}}
-          {{{ inputFirstName }}}
-          {{{ inputSecondName }}}
-          {{{ inputDisplayName }}}
-          {{{ inputPhone }}}
+          {{> DataInputHBS className="dataInput" value=currentUser.email labelText="Почта" readonly="readonly" }}
+          {{> DataInputHBS className="dataInput" value=currentUser.login labelText="Логин" readonly="readonly" }}
+          {{> DataInputHBS className="dataInput" value=currentUser.first_name labelText="Имя" readonly="readonly" }}
+          {{> DataInputHBS className="dataInput" value=currentUser.second_name labelText="Фамилия" readonly="readonly" }}
+          {{> DataInputHBS className="dataInput" value=currentUser.display_name labelText="Имя в чате" readonly="readonly" }}
+          {{> DataInputHBS className="dataInput" value=currentUser.phone labelText="Телефон" readonly="readonly" }}
 
           <div class="user__button-container">
             {{{ linkChangeData }}}
@@ -190,3 +124,14 @@ export default class UserPage extends Block {
     `;
   }
 }
+
+const mapStateToProps = (state : Record<string, unknown> ) => {
+  return {
+    isLoading: state.isLoading,
+    currentUser: state.currentUser,
+    emptyAvatar: state.emptyAvatar,
+  };
+};
+
+export default connect(mapStateToProps)(UserPage);
+

@@ -24,12 +24,16 @@ export default class FormWrapper extends Block {
       val = (block.element as HTMLInputElement).value;
     }
     const result = InputValidator.checkInputData(val, pattern);
-    this.setProps({
+    const obj = (this.getProperties() as FormProps).formState;
+    if (obj!.hasOwnProperty(property)) {
+      this.setProps({
       formState: {
           ...(this.getProperties() as FormProps).formState,
           [property]: val
       }
-    });
+      });
+    }
+
     if (!result) {
       errBlock.setProps( {labelText : errMsg});
       this.setProps({
@@ -49,6 +53,26 @@ export default class FormWrapper extends Block {
 
   checkValidityBeforeSubmit() {
     return true;
+  }
+
+  checkLoginInputToSignIn(elem : HTMLInputElement | undefined = undefined) {
+    return this.checkInputValidity(
+      'login',
+      elem instanceof HTMLInputElement ? elem : this.getChildrens()['inputLogin'] as Block,
+      RegExpression.message,
+      this.getChildrens()['errorLabelLogin'] as Block,
+      ErrMessages.EMPTY_ERR
+    );
+  }
+
+  checkPasswordInputToSignIn(elem : HTMLInputElement | undefined = undefined) {
+    return this.checkInputValidity(
+      'password',
+      elem instanceof HTMLInputElement ? elem : this.getChildrens()['inputPass'] as Block,
+      RegExpression.message,
+      this.getChildrens()['errorLabelPass'] as Block,
+      ErrMessages.EMPTY_ERR
+    );
   }
 
   checkLoginInput(elem : HTMLInputElement | undefined = undefined) {
@@ -71,23 +95,51 @@ export default class FormWrapper extends Block {
     );
   }
 
-  checkOldPasswordInput(elem : HTMLInputElement | undefined = undefined) {
+  checkRepeatedPasswordInput(elem : HTMLInputElement | undefined = undefined, checkVal : string) {
     return this.checkInputValidity(
-      'oldPassword',
-      elem instanceof HTMLInputElement ? elem : this.getChildrens()['inputOldPass'] as Block,
-      RegExpression.password,
-      this.getChildrens()['errorLabelOldPass'] as Block,
-      ErrMessages.PASSWORD_ERR
+      'passwordRepeat',
+      elem instanceof HTMLInputElement ? elem : this.getChildrens()['inputPassRepeat'] as Block,
+      checkVal,
+      this.getChildrens()['errorLabelPassRepeat'] as Block,
+      ErrMessages.PASSWORD_NOT_SAME
     );
+  }
+
+  checkOldPasswordInput(elem : HTMLInputElement | undefined = undefined) {
+    const el = elem instanceof HTMLInputElement ? elem : this.getChildrens()['inputOldPass'] as Block;
+    let val = '';
+    if (el instanceof HTMLInputElement) {
+      val = el.value;
+    }
+    else {
+      val = (el.element as HTMLInputElement).value;
+    }
+    this.setProps({
+      formState: {
+          ...(this.getProperties() as FormProps).formState,
+          oldPassword: val
+      }
+    });
+    return true;
   }
 
   checkNewPasswordInput(elem : HTMLInputElement | undefined = undefined) {
     return this.checkInputValidity(
       'newPassword',
-      elem instanceof HTMLInputElement ? elem : this.getChildrens()['inputOldPass'] as Block,
+      elem instanceof HTMLInputElement ? elem : this.getChildrens()['inputNewPass'] as Block,
       RegExpression.password,
       this.getChildrens()['errorLabelNewPass'] as Block,
       ErrMessages.PASSWORD_ERR
+    );
+  }
+
+  checkRepeatedNewPasswordInput(elem : HTMLInputElement | undefined = undefined, checkVal : string) {
+    return this.checkInputValidity(
+      'passwordRepeat',
+      elem instanceof HTMLInputElement ? elem : this.getChildrens()['inputRepeatPass'] as Block,
+      checkVal,
+      this.getChildrens()['errorLabelRepeatPass'] as Block,
+      ErrMessages.PASSWORD_NOT_SAME
     );
   }
 
@@ -121,6 +173,24 @@ export default class FormWrapper extends Block {
     );
   };
 
+  checkDisplayNameInput(elem : HTMLInputElement | undefined = undefined) {
+    const el = elem instanceof HTMLInputElement ? elem : this.getChildrens()['inputDisplayName'] as Block;
+    let val = '';
+    if (el instanceof HTMLInputElement) {
+      val = el.value;
+    }
+    else {
+      val = (el.element as HTMLInputElement).value;
+    }
+    this.setProps({
+      formState: {
+          ...(this.getProperties() as FormProps).formState,
+          display_name: val
+      }
+    });
+    return true;
+  };
+
   checkPhoneInput(elem : HTMLInputElement | undefined = undefined) {
     return this.checkInputValidity(
       'phone',
@@ -147,7 +217,7 @@ export default class FormWrapper extends Block {
           message: val
       }
     });
-    return InputValidator.checkInputData(val, RegExpression.message);
+    return val !== '';
 
   }
 }

@@ -1,8 +1,12 @@
 import { BlockProps } from "./blockProps";
 
 export type ChatSetProps = BlockProps & {
-  message: string;
+  content: string;
   messageDirectionClass?: string;
   messageStatus?: string;
-  messageTime?: string;
+  time: string;
+  type?: string;
+  user_id: number;
+  id: number;
+  currentUser: Record<string, unknown>;
 }

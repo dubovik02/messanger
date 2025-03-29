@@ -13,7 +13,7 @@ export default class Block {
 
   //иной тип аргумента требует инициации в контрукторе,
   // но инициализировать можем только в методе createResource
-  private _element : any;
+  protected _element : any;
 
   _meta : {
     tagName : string,
@@ -66,7 +66,7 @@ export default class Block {
     this._eventBus.emit(Block.EVENTS.FLOW_RENDER);
   }
 
-  private _render() {
+  protected _render() {
     this._removeEvents();
 
     this._element.textContent = '';
@@ -122,7 +122,7 @@ export default class Block {
   }
 
 
-  private _addEvents() {
+  protected _addEvents() {
     const { events = []} = this.getProperties();
 
     events.forEach((event) => {
@@ -131,7 +131,7 @@ export default class Block {
 
   }
 
-  private _removeEvents() {
+  protected _removeEvents() {
     const { events = [] } = this.getProperties();
 
     events.forEach((event) => {
@@ -207,7 +207,11 @@ export default class Block {
     return true;
   }
 
-  private _createDocumentElement(tagName : string) {
+  componentWillUnmount() {
+
+  }
+
+  protected _createDocumentElement(tagName : string) {
     return document.createElement(tagName);
   }
 
@@ -233,6 +237,10 @@ export default class Block {
 
   getChildrens() {
     return this._childrens;
+  }
+
+  setChildrens(childrens : Record<string, Block | Block[]>) {
+    this._childrens = childrens;
   }
 
   //тип аргумента может быть любой

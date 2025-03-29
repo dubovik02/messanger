@@ -1,43 +1,30 @@
-import { Link, TextLabel } from "../../components";
-import Block from "../../core/block";
+import { Link } from "../../components";
+import Page from "../page";
+import Pathnames from "../../constants/pathnames";
 
-export default class ServicePage extends Block {
+export default class ServicePage extends Page {
 
-  constructor(title : string, subtitle : string) {
-
+  constructor() {
     super(
-      'div',
-      //main
       {
         className : 'service-page',
       },
+      //pageProps,
       {
-        title: new TextLabel ({
-          className: 'textLabel textLabel_service-page-title',
-          labelText: title
-        }),
-
-        subtitle: new TextLabel ({
-          className: 'textLabel textLabel_service-page-subtitle',
-          labelText: subtitle
-        }),
-
         linkBack: new Link({
           className: "link",
           linkText: "Назад к чатам",
+          events: [
+            {
+              eventName: 'click',
+              eventFunc: (e : Event) => {
+                e.preventDefault();
+                document.location.pathname = Pathnames.CHAT;
+              }
+            }
+          ],
         }),
       }
     );
-  }
-
-  override render(): string {
-
-    return `
-      {{{ title }}}
-      {{{ subtitle }}}
-      <div class="service-page__button-container">
-          {{{ linkBack }}}
-      </div>
-    `;
   }
 }
