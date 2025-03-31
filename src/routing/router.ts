@@ -1,7 +1,24 @@
+import pathnames from "../constants/pathnames";
+import AuthService from "../services/auth";
 import { RouteProps } from "../types/routeProps";
 import Route from "./route";
 
 export default class Router {
+
+  private NONAUTH_PATHES = [
+    pathnames.LOGIN,
+    pathnames.SIGNUP
+  ];
+  private AUTH_PATHES = [
+    pathnames.CHAT,
+    pathnames.USER,
+    pathnames.PASSWORD,
+    pathnames.CHANGEDATA
+  ];
+  private SERVICE_PATHES = [
+    pathnames.SERVER_ERR,
+    pathnames.NOT_FOUND
+  ];
 
   static __instance : Router;
   private routes! : Route[];
@@ -46,14 +63,56 @@ export default class Router {
       return;
     }
     else {
+
       if (this._currentRoute && this._currentRoute !== route) {
         this._currentRoute.leave();
       }
 
-      this._currentRoute = route;
-      route.render(this._rootQuery);
-    }
+      if (this.AUTH_PATHES.includes(pathname)) {
+        const service = new AuthService();
+        service.getUserInfo()
+        .then(() => {
+          this._currentRoute = route;
+          route.render(this._rootQuery);
+        })
+        .catch((err) => {
+          if (err.status != 401) {
+            window.router.go(pathnames.SERVER_ERR);
+          }
+          else {
+            window.router.go(pathnames.LOGIN);
+          }
+        })
+        .finally(() => {
+          return;
+        });
+      }
 
+      if (this.NONAUTH_PATHES.includes(pathname)) {
+        const service = new AuthService();
+        service.getUserInfo()
+        .then(() => {
+          window.router.go(pathnames.CHAT);
+        })
+        .catch((err) => {
+          if (err.status != 401) {
+            window.router.go(pathnames.SERVER_ERR);
+          }
+          else {
+            this._currentRoute = route;
+            route.render(this._rootQuery);
+          }
+        })
+        .finally(() => {
+          return;
+        });
+      }
+
+      if (this.SERVICE_PATHES.includes(pathname)) {
+        this._currentRoute = route;
+        route.render(this._rootQuery);
+      }
+    }
   }
 
   go(pathname : string) {

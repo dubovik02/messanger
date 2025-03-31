@@ -151,10 +151,6 @@ class SelectChatPage extends Page {
           {{{ contextMenu }}}
         {{/if}}
 
-        {{#if isDialogShow}}
-          {{{ searchUserDialog }}}
-        {{/if}}
-
         <div class="chat__list-container">
           {{{ linkProfile }}}
           {{{ createChatBut }}}
@@ -169,21 +165,25 @@ class SelectChatPage extends Page {
             {{{ spinner }}}
           {{/if}}
 
-            <div class="chat__detail-container">
-            {{#if activeChatId}}
+          {{#if isDialogShow}}
+            {{{ searchUserDialog }}}
+          {{/if}}
 
-              <div class="chat__user-container">
-                  {{{ avatar }}}
-                  <h3 class="chat__user-name">{{ currentUser.display_name }}</h3>
-              </div>
-              {{{ dotsButton }}}
+          <div class="chat__detail-container">
+          {{#if activeChatId}}
 
-            {{else}}
-              {{> TextLabelHBS classStyle="textLabel textLabel_service-page-text" labelText='Веберете или создайте чат' }}
-            {{/if}}
+            <div class="chat__user-container">
+                {{{ avatar }}}
+                <h3 class="chat__user-name">{{ currentUser.display_name }}</h3>
             </div>
+            {{{ dotsButton }}}
 
-            {{{ chatsSet }}}
+          {{else}}
+            {{> TextLabelHBS classStyle="textLabel textLabel_service-page-text" labelText='Веберете или создайте чат' }}
+          {{/if}}
+          </div>
+
+          {{{ chatsSet }}}
 
           {{{ form }}}
         </div>

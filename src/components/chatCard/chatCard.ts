@@ -1,6 +1,7 @@
 import Block from "../../core/block";
 import { ChatCardProps } from "../../types/chatCardProps";
 import emptyAvatar from "../../assets/emptyAvatar.png";
+import apiPath from "../../constants/api";
 
 export default class ChatCard extends Block {
 
@@ -28,10 +29,13 @@ export default class ChatCard extends Block {
       }
     }
 
+    const path = props.avatar;
+    const fullPath = path ? (apiPath.RESOURCES + path) : emptyAvatar;
+
     return `
       <div {{#if isActive}} class="chatCard chatCard_selected" {{else}} class="chatCard" {{/if}}>
         <div class="chatCard__image-container">
-          <img class="chatCard__image" {{#if avatar}} src="{{avatar}}" {{else}} src="${emptyAvatar}" {{/if}} alt="User's image">
+          <img class="chatCard__image" src="${fullPath}" alt="User's image">
         </div>
         <div class="chatCard__chat-container">
             <h3 class="chatCard__chat-name" >{{title}}</h3>

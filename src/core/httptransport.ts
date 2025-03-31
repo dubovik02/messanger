@@ -67,13 +67,12 @@ export default class HTTPTransport {
 
   queryStringify = (data : object) => {
     if (typeof data !== 'object') {
-        //throw new Error('Неверный формат данных');
         return '';
       }
 
     let result = '?';
     Object.keys(data).forEach((item, index) => {
-      result = result + ((!index) ? '' : '&' ) + `${item}` + '=' +`${data[item as keyof object]}`;
+      result = result + ((!index) ? '' : '&' ) + `${item}` + '=' + encodeURIComponent(`${data[item as keyof object]}`);
     })
     return result;
   }
