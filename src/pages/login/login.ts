@@ -20,6 +20,7 @@ export default class LoginPage extends Page {
   }
 
   override render(): string {
+
     return `
       <div class="dialog__container">
         {{{ title }}}
