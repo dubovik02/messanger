@@ -1,7 +1,7 @@
 import Block from "../../core/block";
 import { BlockProps } from "../../types/blockProps";
 
-export default class MsgImport extends Block {
+export default class MsgInput extends Block {
 
   constructor(props : BlockProps) {
     super(

@@ -1,19 +1,33 @@
-import Block from "../../core/block";
-import { ChatCard, Link, PictureButton, SearchInput } from "../../components";
-import { ChatCardProps } from "../../types/chatCardProps";
+import { Button, Chats, ChatSet, ContextMenu, Link, MenuItem, PictureButton, SearchInput, TextLabel } from "../../components";
 import dots from '../../assets/dots.png';
-import ChatSet from "../../components/chatSet/chatSet";
+import trash from '../../assets/trash.png';
 import { MessageForm } from "../../components/form/message";
+import Page from "../page";
+import Pathnames from "../../constants/pathnames";
+import { connect } from "../../utils/connect";
+import { Waiter } from "../../components/waiter";
+import { PageProps } from "../../types/pageProps";
+import apiPath from "../../constants/api";
+import Block from "../../core/block";
+import ChatService from "../../services/chat";
+import { SearchUserDialog } from "../../components/dialog/searchuser";
 
-export default class SelectChatPage extends Block {
+type SelectChatPageProps = PageProps & {
+  currentUser : Record<string, string>;
+  emptyAvatar : string;
+  isContextMenuShow: boolean;
+  isDialogShow : boolean;
+  activeChatUsers : Record<string, unknown>[];
+  activeChatId: number
+}
 
-  protected chatList : unknown;
+class SelectChatPage extends Page {
 
-  constructor(chats : ChatCard[], chatsSet : ChatSet[]) {
+  constructor(props : SelectChatPageProps) {
+
     super(
-      'div',
-      //main
       {
+        ...props,
         className: 'chat__root-container',
       },
       //child
@@ -21,67 +35,233 @@ export default class SelectChatPage extends Block {
         linkProfile: new Link({
           className: "link link_grey",
           linkText: "Профиль >",
+          events: [
+            {
+              eventName: 'click',
+              eventFunc: (e : Event) => {
+                e.preventDefault();
+                window.router.go(Pathnames.USER);
+              }
+            }
+          ],
+        }),
+
+        avatar: new PictureButton({
+          className: 'pictureButton pictureButton_cursor-default',
+          pictureStyleClass: 'chat__user-image',
+          imagePath: props.currentUser.avatar ? (apiPath.RESOURCES + props.currentUser.avatar) : props.emptyAvatar,
         }),
 
         searchInput: new SearchInput(),
 
-        chats: chats,
+        chatsList: ((new Chats(
+          {
+            className: 'chats-container',
+            activeIndex: -1,
+          }
+        )) as unknown) as Block,
 
-        chatsSet: chatsSet,
+        chatsSet: ((new ChatSet(
+          {
+            className: 'chat__talk-container',
+          }
+        )) as unknown) as Block,
+
+        searchUserDialog: ((new SearchUserDialog({}) as unknown) as Block),
 
         dotsButton: new PictureButton({
           className: 'pictureButton',
           pictureStyleClass: 'pictureButton__image',
           imagePath: dots,
+          events: [
+            {
+              eventName: 'click',
+              eventFunc: (e : MouseEvent) => {
+                e.preventDefault();
+                const show = (this.getProperties() as SelectChatPageProps)['isContextMenuShow'];
+                if (!show) {
+                  const childElems = this.getChildrens();
+                  this.setChildrens({...childElems, contextMenu: this.createContextMenu()});
+                  let target = this.element.getBoundingClientRect();
+                  let elem = (this.getChildrens()['contextMenu'] as Block).element;
+                  elem.style.right =  e.clientX - target.right + 48 + 'px';
+                  elem.style.top = e.clientY + 64 - target.top + 'px';
+                  window.store.set({isContextMenuShow : true});
+                }
+                else {
+                  window.store.set({isContextMenuShow : false});
+                }
+
+              }
+            }
+          ]
         }),
 
-        form: new MessageForm(),
+        createChatBut: new Button({
+          className: "button button_margin-null",
+          attributes: [{name: "type", value: "button"}],
+          buttonText: 'Создать чат',
+          events: [
+            {
+              eventName: 'click',
+              eventFunc: (e : MouseEvent) => {
+                e.preventDefault();
+                window.store.set({isContextMenuShow : false});
+                window.store.set({isLoading : true});
+                let result = prompt("Введите название чата", "Новый чат");
+                if (result && result != '') {
+                  const service = new ChatService();
+                  service.createChat(result);
+                }
+                window.store.set({isLoading : false});
+              }
+            }
+          ]
+        }),
+
+        contextMenu: new ContextMenu(
+          {
+            className: 'context-menu',
+          },
+          {
+            menu: []
+          }
+        ),
+
+        form: ((new MessageForm({
+        }) as unknown) as Block),
+
+        spinner: new Waiter()
       }
 
     );
-
-    this.chatList = document.querySelector('.chat__list-container');
   }
 
   override render(): string {
-    //текущий чат - собеседник
-    let currentChat : any;
-    if (Array.isArray(this.getChildrens().chats)) {
-      const arr = this.getChildrens().chats as ChatCard[];
-      arr.forEach((item : ChatCard) => {
-        if ((item.getProperties() as ChatCardProps).selected) {
-          currentChat = item;
-        }
-      })
-    }
-    const path = (currentChat.getProperties() as ChatCardProps)!.imagePath;
-    const chatName = (currentChat.getProperties() as ChatCardProps)!.chatName;
 
+    const props = this.getProperties() as SelectChatPageProps;
+    const avatarElem = this.getChildrens()['avatar'] as Block;
+    const path = props.currentUser.avatar;
+    const fullPath = path ? (apiPath.RESOURCES + path) : props.emptyAvatar;
+    avatarElem.setProps({imagePath: fullPath});
 
     return `
+
+        {{#if isContextMenuShow}}
+          {{{ contextMenu }}}
+        {{/if}}
+
         <div class="chat__list-container">
           {{{ linkProfile }}}
+          {{{ createChatBut }}}
           {{{ searchInput }}}
-          {{#each chats}}
-            {{{ this }}}
-          {{/each}}
+
+          {{{ chatsList }}}
+
         </div>
         <div class="chat__props-container">
+
+          {{#if isLoading}}
+            {{{ spinner }}}
+          {{/if}}
+
+          {{#if isDialogShow}}
+            {{{ searchUserDialog }}}
+          {{/if}}
+
           <div class="chat__detail-container">
+          {{#if activeChatId}}
+
             <div class="chat__user-container">
-                <img class="chat__user-image" src="${path}" alt="User's image">
-                <h3 class="chat__user-name">${chatName}</h3>
+                {{{ avatar }}}
+                <h3 class="chat__user-name">{{ currentUser.display_name }}</h3>
             </div>
             {{{ dotsButton }}}
+
+          {{else}}
+            {{> TextLabelHBS classStyle="textLabel textLabel_service-page-text" labelText='Веберете или создайте чат' }}
+          {{/if}}
           </div>
-          <div class="chat__talk-container">
-            <p class="chat__date">1 марта</p>
-            {{#each chatsSet}}
-            {{{ this }}}
-            {{/each}}
-          </div>
+
+          {{{ chatsSet }}}
+
           {{{ form }}}
         </div>
     `;
   }
+
+  createContextMenu() {
+    const chatUsers = (this.getProperties() as SelectChatPageProps)['activeChatUsers'];
+    const childMenuItem = [];
+
+    const addMenu = this.createAddUsersMenu();
+    childMenuItem.push(addMenu);
+
+    chatUsers.forEach( (item) => {
+      const props = (this.getProperties() as SelectChatPageProps);
+      if (item.id != props.currentUser.id) {
+        const userElem = new MenuItem({
+          className: 'menu-item',
+          menuText: (item.login as string),
+          buttonImage: trash,
+          onButtonClick: () => {
+            const service = new ChatService();
+            service.deleteUsersFromChat([item.id as number], props.activeChatId).
+            then(() => {
+              (userElem.element as HTMLElement).innerText = '';
+            })
+            .catch(() => {
+              window.router.go(Pathnames.SERVER_ERR);
+            });
+          }
+        })
+        childMenuItem.push(userElem);
+      }
+    })
+
+    return new ContextMenu(
+      {
+        className: 'context-menu',
+      },
+      {
+        menu: childMenuItem,
+      }
+    );
+  }
+
+  createAddUsersMenu() {
+    return new TextLabel(
+      {
+        className: 'context-menu__item context-menu__link',
+        labelText: 'Добавить пользователя в чат',
+        events: [
+          {
+            eventName: 'click',
+            eventFunc: (e : MouseEvent) => {
+              e.preventDefault();
+              const childElems = this.getChildrens();
+              this.setChildrens({...childElems, searchUserDialog: ((new SearchUserDialog({}) as unknown) as Block)});
+              window.store.set({isContextMenuShow : false});
+              window.store.set({isDialogShow : true});
+            }
+          }
+        ]
+      }
+    )
+  }
+
 }
+
+const mapStateToProps = (state : Record<string, unknown>) => {
+  return {
+    isLoading: state.isLoading,
+    currentUser: state.currentUser,
+    emptyAvatar: state.emptyAvatar,
+    isContextMenuShow: state.isContextMenuShow,
+    isDialogShow: state.isDialogShow,
+    activeChatUsers : state.activeChatUsers,
+    activeChatId: state.activeChatId
+  };
+};
+
+export default connect(mapStateToProps)(SelectChatPage);

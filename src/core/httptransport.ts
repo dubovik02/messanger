@@ -5,7 +5,7 @@ export default class HTTPTransport {
   constructor() {
   }
 
-  get = (url : string, options : { [key: string]: never } = {}) => {
+  get = (url : string, options : { [key: string]: any } = {}) => {
     return this.request(url, {...options, method: METHODS.GET}, options.timeout);
   };
 
@@ -55,6 +55,8 @@ export default class HTTPTransport {
       xhr.timeout = timeout;
       xhr.ontimeout = reject;
 
+      xhr.withCredentials = true;
+
       if (isGet || !data) {
         xhr.send();
       } else {
@@ -65,12 +67,12 @@ export default class HTTPTransport {
 
   queryStringify = (data : object) => {
     if (typeof data !== 'object') {
-        throw new Error('Неверный формат данных');
+        return '';
       }
 
     let result = '?';
     Object.keys(data).forEach((item, index) => {
-      result = result + ((!index) ? '' : '&' ) + `${item}` + '=' +`${data[item as keyof object]}`;
+      result = result + ((!index) ? '' : '&' ) + `${item}` + '=' + encodeURIComponent(`${data[item as keyof object]}`);
     })
     return result;
   }

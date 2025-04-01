@@ -1,0 +1,6 @@
+.menu-item {
+  display: flex;
+  justify-content: flex-start;
+  justify-content: left;
+  align-items: center;
+}

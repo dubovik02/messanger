@@ -1,11 +1,16 @@
-import { FormProps } from "../../../types/formProps";
+import { connect } from "../../../utils/connect";
 import { Button } from "../../button";
 import { FormWrapper } from "../../form-wrapper";
 import { InputText } from "../../inputText";
 import { Link } from "../../link";
 import { TextLabel } from "../../textLabel";
+import Pathnames from "./../../../constants/pathnames";
+import { Waiter } from "../../waiter";
+import AuthService from "../../../services/auth";
+import { FormProps } from "../../../types/formProps";
+import { SignInData } from "../../../types/sighinData";
 
-export default class LoginForm extends FormWrapper {
+class LoginForm extends FormWrapper {
 
   constructor() {
     super(
@@ -23,10 +28,8 @@ export default class LoginForm extends FormWrapper {
               e.preventDefault();
               const result = this.checkValidityBeforeSubmit();
               if (result) {
-                console.log((this.getProperties() as FormProps).formState!);
-              }
-              else {
-                console.log('error');
+                const authService = new AuthService();
+                authService.signin((this.getProperties() as FormProps).formState! as SignInData);
               }
             }
           }
@@ -34,7 +37,6 @@ export default class LoginForm extends FormWrapper {
       },
       //childrens
       {
-        title : new TextLabel({ className: "textLabel textLabel_subtitle", labelText: "Вход" }),
 
         loginLabel : new TextLabel({ className: "textLabel textLabel_text textLabel_text-grey", labelText: "Логин", inputId: "login" }),
         inputLogin : new InputText({
@@ -49,7 +51,7 @@ export default class LoginForm extends FormWrapper {
               eventName: 'blur',
               eventFunc: (e : Event) => {
                 e.preventDefault();
-                this.checkLoginInput();
+                this.checkLoginInputToSignIn();
               }
             }
           ],
@@ -69,7 +71,7 @@ export default class LoginForm extends FormWrapper {
               eventName: 'blur',
               eventFunc: (e : Event) => {
                 e.preventDefault();
-                this.checkPasswordInput();
+                this.checkPasswordInputToSignIn();
               }
             }
           ],
@@ -85,23 +87,45 @@ export default class LoginForm extends FormWrapper {
         linkRegistration: new Link({
           className: "link",
           linkText: "Нет аккаунта?",
+          events: [
+            {
+              eventName: 'click',
+              eventFunc: (e : Event) => {
+                e.preventDefault();
+                window.router.go(Pathnames.SIGNUP);
+              }
+            }
+          ],
         }),
+
+        errorLoginLabel: new TextLabel({className: "textLabel textLabel_text textLabel_text-red", labelText: "" }),
+
+        spinner: new Waiter()
       }
     );
   }
 
   override render(): string {
     return `
-      <div class="dialog__form-container">
-          {{{ loginLabel }}}
-          {{{ inputLogin }}}
-          {{{ errorLabelLogin }}}
+      {{#if isLoading}}
+        {{{ spinner }}}
+      {{/if}}
 
-          {{{ passLabel }}}
-          {{{ inputPass }}}
-          {{{ errorLabelPass }}}
+      <div class="dialog__form-container">
+        {{{ loginLabel }}}
+        {{{ inputLogin }}}
+        {{{ errorLabelLogin }}}
+
+        {{{ passLabel }}}
+        {{{ inputPass }}}
+        {{{ errorLabelPass }}}
       </div>
       <div class="dialog__form-container">
+
+        {{#if loginError}}
+          {{> TextLabelHBS classStyle="textLabel textLabel_text textLabel_text-red textLabel_center" labelText=loginError}}
+        {{/if}}
+
         {{{ buttonSignIn }}}
         {{{ linkRegistration }}}
       </div>
@@ -110,9 +134,18 @@ export default class LoginForm extends FormWrapper {
 
   override checkValidityBeforeSubmit(): boolean {
     let result = true;
-    result = result && this.checkLoginInput();
-    result = result && this.checkPasswordInput();
+    result = result && this.checkLoginInputToSignIn();
+    result = result && this.checkPasswordInputToSignIn();
     return result;
   }
 
 }
+
+const mapStateToProps = (state : Record<string, unknown> ) => {
+  return {
+    isLoading: state.isLoading,
+    loginError: state.loginError,
+  };
+};
+
+export default connect(mapStateToProps)(LoginForm);

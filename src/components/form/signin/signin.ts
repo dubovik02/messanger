@@ -4,8 +4,13 @@ import { FormWrapper } from "../../form-wrapper";
 import { InputText } from "../../inputText";
 import { Link } from "../../link";
 import { TextLabel } from "../../textLabel";
+import Pathnames from "../../../constants/pathnames";
+import AuthService from "../../../services/auth";
+import { connect } from "../../../utils/connect";
+import { Waiter } from "../../waiter";
+import Block from "../../../core/block";
 
-export default class SigninForm extends FormWrapper {
+export class SigninForm extends FormWrapper {
 
   constructor() {
     super(
@@ -27,10 +32,8 @@ export default class SigninForm extends FormWrapper {
               e.preventDefault();
               const result = this.checkValidityBeforeSubmit();
               if (result) {
-                console.log((this.getProperties() as FormProps).formState!);
-              }
-              else {
-                console.log('error');
+                const authService = new AuthService();
+                authService.signup((this.getProperties() as FormProps).formState!);
               }
             }
           }
@@ -38,7 +41,6 @@ export default class SigninForm extends FormWrapper {
       },
       //childrens
       {
-        title : new TextLabel({ className: "textLabel textLabel_subtitle", labelText: "Вход" }),
 
         emailLabel : new TextLabel({ className: "textLabel textLabel_text textLabel_text-grey", labelText: "Почта", inputId: "email" }),
         inputEmail : new InputText({
@@ -209,9 +211,28 @@ export default class SigninForm extends FormWrapper {
               name: "type",
               value: "password"
             },
+            {
+              name: "name",
+              value: "passwordRepeat"
+            },
+            {
+              name: "id",
+              value: "passwordRepeat"
+            }
+          ],
+          events: [
+            {
+              eventName: 'blur',
+              eventFunc: (e : Event) => {
+                e.preventDefault();
+                this.checkRepeatedPasswordInput(e.target as HTMLInputElement, (this.getProperties() as FormProps).formState!.password);
+              }
+            }
           ],
         }),
         errorLabelPassRepeat: new TextLabel({className: "textLabel textLabel_text textLabel_text-red", labelText: "" }),
+
+        errorLabelSignup: new TextLabel({className: "textLabel textLabel_text textLabel_text-red", labelText: "" }),
 
         buttonSignUp: new Button ({
           className: "button",
@@ -222,7 +243,18 @@ export default class SigninForm extends FormWrapper {
         linkSignIn: new Link({
           className: "link",
           linkText: "Войти",
+          events: [
+            {
+              eventName: 'click',
+              eventFunc: (e : Event) => {
+                e.preventDefault();
+                document.location.pathname = Pathnames.LOGIN;
+              }
+            }
+          ],
         }),
+
+        spinner: new Waiter()
       }
     );
   }
@@ -230,6 +262,9 @@ export default class SigninForm extends FormWrapper {
   override render(): string {
     return `
       <div class="dialog__form-container">
+        {{#if isLoading}}
+          {{{ spinner }}}
+        {{/if}}
         {{{ emailLabel }}}
         {{{ inputEmail }}}
         {{{ errorLabelEmail }}}
@@ -259,6 +294,11 @@ export default class SigninForm extends FormWrapper {
         {{{ errorLabelPassRepeat }}}
       </div>
       <div class="dialog__form-container">
+
+        {{#if signupError}}
+          {{> TextLabelHBS classStyle="textLabel textLabel_text textLabel_text-red textLabel_center" labelText=signupError}}
+        {{/if}}
+
         {{{ buttonSignUp }}}
         {{{ linkSignIn }}}
       </div>
@@ -266,9 +306,14 @@ export default class SigninForm extends FormWrapper {
   }
 
   override checkValidityBeforeSubmit(): boolean {
+
+    const elemRepeatPass = (this.getChildrens()['inputPassRepeat'] as Block).element;
+    const val = (this.getProperties() as FormProps).formState!.password;
+
     let result = true;
     result = result && this.checkLoginInput();
     result = result && this.checkPasswordInput();
+    result = result && this.checkRepeatedPasswordInput(elemRepeatPass, val);
     result = result && this.checkEmailInput();
     result = result && this.checkFirstNameInput();
     result = result && this.checkSecondNameInput();
@@ -276,3 +321,13 @@ export default class SigninForm extends FormWrapper {
     return result;
   }
 }
+
+
+const mapStateToProps = (state : Record<string, unknown> ) => {
+  return {
+    isLoading: state.isLoading,
+    signupError: state.signupError,
+  };
+};
+
+export default connect(mapStateToProps)(SigninForm);
