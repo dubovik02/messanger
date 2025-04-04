@@ -34,7 +34,8 @@
     "@types/sinon": "^17.0.4",
     "handlebars": "^4.7.8",
     "jsdom": "^26.0.0",
-    "sinon": "^20.0.0"
+    "sinon": "^20.0.0",
+    "uuid": "^11.1.0"
   },
   "engines": {
     "node": ">=12.0.0"
