@@ -17,7 +17,7 @@ describe('Router', () => {
   };
 
   function createRouter() {
-    return new Router('app', notFoundRouterProps);
+    return Router('app', notFoundRouterProps);
   }
 
   it('Добавление маршрута в пул маршрутов роутера', () => {
