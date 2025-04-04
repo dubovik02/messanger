@@ -1,7 +1,6 @@
 import { expect } from "chai";
 import Router from "./router";
 import Pathnames from "../constants/pathnames";
-import Store from "../core/store";
 
 describe('Router', () => {
 
