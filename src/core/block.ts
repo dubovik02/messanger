@@ -179,6 +179,15 @@ export default class Block {
   }
 
   getContent() {
+
+    setTimeout(() => {
+      if (
+        this.element?.nodeType === Node.ELEMENT_NODE
+      ) {
+        this._eventBus.emit(Block.EVENTS.FLOW_CDM);
+      }
+    }, 100);
+
     return this._element;
   }
 
