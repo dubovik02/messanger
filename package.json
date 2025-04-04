@@ -8,21 +8,31 @@
     "build": "tsc && vite build",
     "start": "tsc && vite build && vite preview --port 3000",
     "preview": "vite preview",
-    "lint": "npx stylelint \"**/*.css\" && eslint ."
+    "lint": "npx stylelint \"**/*.css\" && eslint .",
+    "test": "mocha"
   },
   "devDependencies": {
+    "@types/chai": "^5.2.1",
+    "@types/mocha": "^10.0.10",
     "@typescript-eslint/eslint-plugin": "^8.24.1",
     "@typescript-eslint/parser": "^8.24.1",
+    "chai": "^5.2.0",
     "eslint": "^9.20.1",
     "eslint-config-google": "^0.14.0",
+    "mocha": "^11.1.0",
     "stylelint": "^16.15.0",
     "stylelint-config-standard": "^37.0.0",
+    "ts-node": "^10.9.2",
     "typescript": "~5.7.2",
     "vite": "^6.1.0"
   },
   "dependencies": {
+    "@types/node": "^22.13.17",
+    "@types/sinon": "^17.0.4",
     "handlebars": "^4.7.8",
-    "vite-plugin-handlebars": "^2.0.0"
+    "jsdom": "^26.0.0",
+    "sinon": "^20.0.0",
+    "vite-plugin-handlebars": "^1.5.0"
   },
   "engines": {
     "node": ">=12.0.0"
