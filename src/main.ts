@@ -86,8 +86,7 @@ else {
 }
 
 window.router = new Router('.main-container', notFoundRoute);
-//window.store = new Store(defaultState);
-window.store = Store(defaultState);
+window.store = new Store(defaultState);
 
 window.store.on(StoreEvents.Updated, (prevState : object, newState : object) => {
   sessionStorage.setItem('store', JSON.stringify(prevState));
