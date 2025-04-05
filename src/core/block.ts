@@ -1,6 +1,7 @@
 import Handlebars from 'handlebars';
 import { BlockProps } from "../types/blockProps";
 import EventBus from "./eventBus";
+import { v4 as uuidv4 } from 'uuid';
 
 export default class Block {
 
@@ -36,7 +37,7 @@ export default class Block {
 
     this._childrens = childrens;
 
-    this._id = crypto.randomUUID();
+    this._id = uuidv4();
 
     this._eventBus = new EventBus();
     this._registerEvents();
@@ -179,6 +180,15 @@ export default class Block {
   }
 
   getContent() {
+
+    setTimeout(() => {
+      if (
+        this.element?.nodeType === Node.ELEMENT_NODE
+      ) {
+        this._eventBus.emit(Block.EVENTS.FLOW_CDM);
+      }
+    }, 100);
+
     return this._element;
   }
 
