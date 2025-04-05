@@ -2,6 +2,6 @@
   "extension": ["ts"],
   "spec": "src/**/*.spec.ts",
   "require": ["mochaSetup.js"],
-    "loader": ["ts-node/esm", "./loader-css.ts", "./loader-png.ts", "./loader-hbs.ts"]
+    "loader": ["ts-node/esm", "./loader-css.js", "./loader-png.js", "./loader-hbs.js"]
 
 }
